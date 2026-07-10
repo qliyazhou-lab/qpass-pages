@@ -1,0 +1,1909 @@
+<!doctype html>
+<html lang="zh-CN" data-lang-ready="false">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Q-PASS Responsive Open Platform V1</title>
+  <style>
+    :root {
+      --page: 1440px;
+      --shell: 1200px;
+      --gap: 16px;
+      --bg: #ffffff;
+      --ink: #19191c;
+      --muted: #737680;
+      --soft: #f2f2f6;
+      --soft-2: #f7f8fa;
+      --line: #e4e5eb;
+      --black: #171719;
+      --shadow: 0 24px 70px rgba(31, 34, 44, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-width: var(--page);
+      background: var(--bg);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue",
+        "PingFang SC", "Microsoft YaHei",
+        "Noto Sans CJK SC", "WenQuanYi Micro Hei",
+        sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      min-height: 100vh;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      color: inherit;
+      cursor: pointer;
+    }
+
+    .page {
+      width: var(--page);
+      margin: 0 auto;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    html[data-lang-ready="false"] .page {
+      visibility: hidden;
+    }
+
+    .shell {
+      width: var(--shell);
+      margin: 0 auto;
+    }
+
+    .grid-24 {
+      display: grid;
+      grid-template-columns: repeat(24, minmax(0, 1fr));
+      column-gap: var(--gap);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      font-size: 50px;
+      line-height: 1.1;
+      font-weight: 880;
+      white-space: nowrap;
+    }
+
+    h2 {
+      font-size: 44px;
+      line-height: 1.18;
+      font-weight: 860;
+    }
+
+    h3 {
+      font-size: 22px;
+      line-height: 1.3;
+      font-weight: 820;
+    }
+
+    .body-copy {
+      color: #676a73;
+      font-size: 18px;
+      line-height: 1.74;
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    span,
+    a,
+    button,
+    input,
+    .body-copy {
+      overflow-wrap: break-word;
+    }
+
+    .nowrap {
+      white-space: nowrap;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      width: 100%;
+      height: 82px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-inner {
+      height: 82px;
+      align-items: center;
+    }
+
+    .logo {
+      grid-column: 1 / span 4;
+      display: inline-flex;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .logo img {
+      display: block;
+      width: auto;
+      height: 28px;
+    }
+
+    .nav-links {
+      grid-column: 5 / span 12;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      color: #5f626b;
+      font-size: 15px;
+      font-weight: 680;
+      white-space: nowrap;
+    }
+
+    .nav-links span:first-child {
+      color: var(--ink);
+    }
+
+    .nav-actions {
+      grid-column: 17 / span 8;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .pill,
+    .primary-cta,
+    .ghost-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .pill {
+      height: 42px;
+      gap: 8px;
+      padding: 0 18px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 760;
+    }
+
+    .lang-toggle {
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      font-size: 13px;
+      font-weight: 780;
+      white-space: nowrap;
+    }
+
+    .lang-toggle b,
+    .lang-toggle em {
+      height: 32px;
+      min-width: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      cursor: pointer;
+      font-style: normal;
+      transition: background 160ms ease, color 160ms ease;
+    }
+
+    .lang-toggle b {
+      color: #747780;
+    }
+
+    .lang-toggle em {
+      color: #747780;
+    }
+
+    .lang-toggle .is-active {
+      background: var(--black);
+      color: #fff;
+    }
+
+    section {
+      padding: 78px 0;
+      background: #fff;
+    }
+
+    .center-head {
+      max-width: 920px;
+      margin: 0 auto 44px;
+      text-align: center;
+    }
+
+    .center-head .body-copy {
+      margin-top: 18px;
+    }
+
+    .section-label {
+      margin-bottom: 18px;
+      color: #7a7d86;
+      font-size: 14px;
+      line-height: 1;
+      font-weight: 760;
+    }
+
+    .open-hero {
+      min-height: 700px;
+      padding: 100px 0 0px;
+      background: #fff;
+    }
+
+    .open-hero-grid {
+      align-items: center;
+    }
+
+    .open-hero-copy {
+      grid-column: 1 / span 14;
+      min-width: 0;
+    }
+
+    .open-hero-copy h1 {
+      max-width: 660px;
+    }
+
+    .open-hero-copy .body-copy {
+      width: 660px;
+      max-width: 100%;
+      margin-top: 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .primary-cta,
+    .ghost-cta {
+      height: 50px;
+      gap: 10px;
+      padding: 0 24px;
+      border: 1px solid var(--black);
+      font-size: 16px;
+      font-weight: 820;
+    }
+
+    .primary-cta {
+      background: var(--black);
+      color: #fff;
+    }
+
+    .ghost-cta {
+      background: #fff;
+      color: var(--ink);
+      border-color: var(--line);
+    }
+
+    .hero-points {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      width: 660px;
+      max-width: 100%;
+      margin-top: 56px;
+    }
+
+    .hero-point {
+      padding: 22px;
+      border: 1px solid #f2f2f6;
+      border-radius: 22px;
+      background: #fff;
+      min-width: 0;
+    }
+
+    .hero-point strong {
+      display: block;
+      font-size: 18px;
+      line-height: 1.28;
+      font-weight: 820;
+    }
+
+    .hero-point span {
+      display: block;
+      margin-top: 10px;
+      color: #747680;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .login-stage {
+      grid-column: 16 / span 9;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .login-card {
+      width: 440px;
+      padding: 56px 48px;
+      border: 0;
+      border-radius: 34px;
+      background: #fff;
+      box-shadow: 0 12px 70px rgb(23 23 25 / 10%);
+      min-width: 0;
+    }
+
+    .login-card h2 {
+      font-size: 32px;
+      line-height: 1.18;
+    }
+
+    .login-card > p {
+      margin-top: 12px;
+      color: #9699a1;
+      font-size: 14px;
+      line-height: 1.66;
+    }
+
+    .field {
+      margin-top: 22px;
+    }
+
+    .login-card > .field:first-of-type {
+      margin-top: 32px;
+    }
+
+    .login-card > .field + .field {
+      margin-top: 24px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 10px;
+      color: #747680;
+      font-size: 14px;
+      line-height: 1;
+      font-weight: 760;
+    }
+
+    .field input {
+      width: 100%;
+      height: 52px;
+      padding: 0 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      outline: none;
+      background: rgba(255, 255, 255, 0.72);
+      color: #19191c;
+      font-size: 15px;
+    }
+
+    .field input::placeholder {
+      color: rgb(25 25 28 / 20%);
+      opacity: 1;
+    }
+
+    .field input:focus {
+      border-color: #b8bcc6;
+      background: #fff;
+    }
+
+    .login-card .primary-cta {
+      width: 100%;
+      margin-top: 32px;
+      border: 0;
+    }
+
+    .login-note {
+      margin-top: 20px;
+      color: #747680;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .workspace-section {
+      padding-top: 140px;
+      padding-bottom: 0;
+    }
+
+    .workspace-head {
+      max-width: none;
+      margin: 0 auto 54px;
+      text-align: center;
+    }
+
+    .workspace-head .body-copy {
+      max-width: none;
+      margin: 18px auto 0;
+      white-space: nowrap;
+    }
+
+    .workspace-panel {
+      height: 616px;
+      padding: 64px 42px;
+      border-radius: 34px;
+      background: url("产品介绍区域 1.avif") center / cover no-repeat;
+    }
+
+    .workspace-grid {
+      align-items: center;
+    }
+
+    .workspace-tabs {
+      grid-column: 1 / span 7;
+      display: grid;
+      grid-template-rows: repeat(4, 110px);
+      gap: 0;
+      align-content: center;
+    }
+
+    .workspace-tab {
+      min-height: 56px;
+      width: max-content;
+      padding: 0 30px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--ink);
+      text-align: left;
+      align-self: center;
+      justify-self: start;
+      max-width: 100%;
+    }
+
+    .workspace-tab.active {
+      width: 306px;
+      padding: 16px 20px;
+      border-radius: 24px;
+    }
+
+    .workspace-tab strong {
+      display: block;
+      font-size: 16px;
+      line-height: 1.3;
+      font-weight: 820;
+    }
+
+    .workspace-tab span {
+      display: none;
+      margin-top: 8px;
+      color: #19191c;
+      font-size: 14px;
+      line-height: 1.55;
+      font-weight: 400;
+    }
+
+    .workspace-tab.active span {
+      display: block;
+    }
+
+    .workspace-stage {
+      grid-column: 8 / span 17;
+      position: relative;
+      height: 488px;
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    .workspace-figure {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      opacity: 0;
+      transition: opacity 360ms cubic-bezier(0.25, 1, 0.5, 1);
+      will-change: opacity;
+    }
+
+    .workspace-figure.active {
+      opacity: 1;
+    }
+
+    .mode-section {
+      padding-top: 140px;
+      padding-bottom: 0;
+    }
+
+    .mode-grid {
+      align-items: stretch;
+      row-gap: 44px;
+    }
+
+    .mode-head {
+      grid-column: 2 / span 22;
+      text-align: center;
+    }
+
+    .mode-head .body-copy {
+      max-width: none;
+      margin: 18px auto 0;
+      white-space: nowrap;
+    }
+
+    .mode-copy {
+      grid-column: 1 / span 10;
+      align-self: center;
+    }
+
+    .mode-copy .body-copy {
+      margin-top: 18px;
+    }
+
+    .mode-tabs {
+      grid-column: 2 / span 7;
+      align-self: center;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+      margin-top: 0;
+    }
+
+    .mode-tab {
+      min-height: 190px;
+      padding: 28px;
+      border: 1px solid #f0f1f5;
+      border-radius: 24px;
+      background: #fff;
+      text-align: left;
+      box-shadow: none;
+      min-width: 0;
+    }
+
+    .mode-tab.active {
+      background: linear-gradient(140deg, rgb(245 249 255 / 20%), rgb(245 249 255 / 40%));
+      color: var(--ink);
+      border-color: var(--ink);
+      box-shadow: inset 0 0 0 1px var(--ink);
+    }
+
+    .mode-tab-head {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .mode-tab strong {
+      display: block;
+      font-size: 22px;
+      line-height: 1.3;
+      font-weight: 820;
+    }
+
+    .mode-bullets {
+      display: grid;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .mode-bullets span {
+      position: relative;
+      display: block;
+      padding-left: 12px;
+      color: #747680;
+      font-size: 15px;
+      line-height: 1.58;
+    }
+
+    .mode-bullets span::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #e8e8e8;
+    }
+
+    .mode-panel {
+      grid-column: 10 / span 14;
+      position: relative;
+      height: 500px;
+      padding: 40px;
+      border-radius: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      background: linear-gradient(140deg, rgb(245 249 255), rgb(245 249 255 / 30%));
+      overflow: hidden;
+    }
+
+    .mode-content {
+      position: absolute;
+      inset: 40px;
+      display: block;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 160ms ease;
+    }
+
+    .mode-content.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mode-badge {
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: #fff;
+      color: #747680;
+      font-size: 12px;
+      font-weight: 820;
+    }
+
+    .mode-content h3 {
+      margin-top: 0;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .mode-content > p {
+      margin-top: 14px;
+      color: #676a73;
+      font-size: 15px;
+      line-height: 1.72;
+    }
+
+    .mode-demo {
+      margin-top: 28px;
+      padding: 0;
+      min-height: auto;
+      display: block;
+      border: 0;
+      border-radius: 28px;
+      background: transparent;
+    }
+
+    .mode-steps {
+      display: grid;
+      gap: 12px;
+      margin-top: 0;
+    }
+
+    .mode-step {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 16px;
+      min-height: 66px;
+      border-radius: 18px;
+      background: #fff;
+    }
+
+    .mode-step b {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #f0f1f5;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 820;
+    }
+
+    .mode-step span {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: normal;
+      color: #19191c;
+      font-size: 15px;
+      line-height: 1.66;
+      text-align: center;
+    }
+
+    .api-section {
+      padding: 140px 0 0;
+    }
+
+    .api-head {
+      text-align: center;
+    }
+
+    .api-head .body-copy {
+      max-width: none;
+      margin: 18px auto 0;
+      white-space: nowrap;
+    }
+
+    .api-cards {
+      margin-top: 54px;
+    }
+
+    .api-card {
+      grid-column: span 6;
+      display: flex;
+      flex-direction: column;
+      padding: 28px;
+      border: 1px solid #f2f2f6;
+      border-radius: 24px;
+      background: #fff;
+      min-width: 0;
+    }
+
+    .method {
+      width: 36px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: #f0f1f5;
+      color: var(--ink);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue",
+        "PingFang SC", "Microsoft YaHei",
+        "Noto Sans CJK SC", "WenQuanYi Micro Hei",
+        sans-serif;
+      font-size: 15px;
+      line-height: 1;
+      font-weight: 820;
+    }
+
+    .endpoint {
+      display: block;
+      margin-top: 24px;
+      color: var(--ink);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue",
+        "PingFang SC", "Microsoft YaHei",
+        "Noto Sans CJK SC", "WenQuanYi Micro Hei",
+        sans-serif;
+      font-size: 17px;
+      line-height: 1.45;
+      font-weight: 820;
+      min-height: 62px;
+      overflow-wrap: anywhere;
+    }
+
+    .api-card p {
+      margin-top: 0;
+      color: #747680;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .api-panel {
+      grid-column: 13 / span 12;
+      padding: 38px;
+      border-radius: 34px;
+      background: var(--black);
+      color: #e8e8eb;
+    }
+
+    .api-panel h3 {
+      color: #fff;
+      font-size: 24px;
+    }
+
+    .api-panel pre {
+      margin: 22px 0 0;
+      white-space: pre-wrap;
+      font-size: 14px;
+      line-height: 1.72;
+    }
+
+    .access-panel {
+      padding: 52px 0 54px;
+      border-radius: 34px;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.34)),
+        url("产品介绍区域 1.avif") center / cover no-repeat;
+    }
+
+    .access-section {
+      padding: 140px 0 78px;
+    }
+
+    .access-content {
+      align-items: center;
+    }
+
+    .access-copy {
+      grid-column: 3 / span 15;
+      min-width: 0;
+    }
+
+    .access-copy h2 {
+      font-size: 32px;
+      line-height: 1.2;
+    }
+
+    .access-copy .body-copy {
+      margin-top: 18px;
+      white-space: nowrap;
+    }
+
+    .access-action {
+      grid-column: 20 / span 3;
+      justify-self: end;
+      min-width: 0;
+    }
+
+    html[lang="en"] h1,
+    html[lang="en"] .nowrap,
+    html[lang="en"] .workspace-head .body-copy,
+    html[lang="en"] .mode-head .body-copy,
+    html[lang="en"] .api-head .body-copy,
+    html[lang="en"] .access-copy .body-copy {
+      white-space: normal;
+    }
+
+    html[lang="en"] h1,
+    html[lang="en"] h2,
+    html[lang="en"] h3,
+    html[lang="en"] .body-copy,
+    html[lang="en"] .hero-point span,
+    html[lang="en"] .workspace-tab span,
+    html[lang="en"] .mode-bullets span,
+    html[lang="en"] .mode-content > p,
+    html[lang="en"] .mode-step span,
+    html[lang="en"] .api-card p,
+    html[lang="en"] .footer-col p {
+      word-break: normal;
+      overflow-wrap: break-word;
+      hyphens: auto;
+    }
+
+    html[lang="en"] .nav-actions {
+      grid-column: 15 / span 10;
+      gap: 8px;
+    }
+
+    html[lang="en"] .pill {
+      padding-left: 14px;
+      padding-right: 14px;
+    }
+
+    html[lang="en"] .access-action {
+      grid-column: 19 / span 5;
+    }
+
+    html[lang="en"] .access-action .primary-cta {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    html[lang="en"] .footer-col h3 {
+      white-space: nowrap;
+    }
+
+    .footer {
+      padding: 58px 0 34px;
+      border-top: 1px solid rgb(228 229 235 / 40%);
+      color: #8c8f97;
+      background: #fff;
+    }
+
+    .footer-main {
+      align-items: start;
+      margin-bottom: 54px;
+    }
+
+    .footer-logo {
+      grid-column: 1 / span 10;
+    }
+
+    .footer-logo img {
+      width: 118px;
+      height: auto;
+      display: block;
+    }
+
+    .footer-col.support {
+      grid-column: 16 / span 4;
+    }
+
+    .footer-col.legal {
+      grid-column: 21 / span 4;
+    }
+
+    .footer-col h3 {
+      margin-bottom: 18px;
+      color: var(--ink);
+      font-size: 20px;
+      line-height: 1.3;
+      font-weight: 820;
+    }
+
+    .footer-col p {
+      margin-top: 12px;
+      color: #6f737c;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .footer-legal {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px 20px;
+      color: #9699a1;
+      font-size: 12px;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    .police {
+      width: 16px;
+      height: 16px;
+      vertical-align: -4px;
+      margin-right: 5px;
+    }
+
+    html,
+    body {
+      min-width: 0;
+      scroll-behavior: smooth;
+    }
+
+    .page {
+      width: 100%;
+      max-width: none;
+      padding-top: 82px;
+    }
+
+    .shell {
+      width: min(var(--shell), calc(100vw - 48px));
+    }
+
+    .nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      border-bottom-color: rgb(228 229 235 / var(--nav-border-alpha, 0.18));
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: border-bottom-color 180ms ease, background 180ms ease;
+    }
+
+    .nav.is-scrolled {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .pill,
+    .primary-cta,
+    .ghost-cta,
+    .lang-toggle,
+    .workspace-tab,
+    .mode-tab {
+      cursor: pointer;
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background 160ms ease, color 160ms ease, opacity 160ms ease;
+    }
+
+    .pill:hover,
+    .lang-toggle:hover,
+    .ghost-cta:hover {
+      transform: translateY(-1px);
+      border-color: #cfd1d8;
+      box-shadow: 0 10px 26px rgb(23 23 25 / 6%);
+    }
+
+    .primary-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgb(23 23 25 / 16%);
+    }
+
+    .workspace-tab:hover,
+    .mode-tab:hover {
+      transform: translateY(-1px);
+    }
+
+    section {
+      scroll-margin-top: 104px;
+    }
+
+    @media (max-width: 1180px) {
+      .shell {
+        width: min(1000px, calc(100vw - 48px));
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+
+      h2 {
+        font-size: 36px;
+      }
+
+      .nav-inner {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .logo,
+      .nav-actions {
+        grid-column: auto;
+      }
+
+      .open-hero-copy {
+        grid-column: 1 / span 13;
+      }
+
+      .login-stage {
+        grid-column: 15 / span 10;
+      }
+
+      .login-card {
+        width: min(400px, 100%);
+      }
+
+      .hero-points {
+        width: 100%;
+      }
+
+      .workspace-panel {
+        height: auto;
+        padding: 44px 32px;
+      }
+
+      .workspace-tabs {
+        grid-column: 1 / span 8;
+      }
+
+      .workspace-stage {
+        grid-column: 9 / span 16;
+      }
+
+      .mode-tabs {
+        grid-column: 1 / span 8;
+      }
+
+      .mode-panel {
+        grid-column: 10 / span 15;
+      }
+
+      .api-card {
+        grid-column: span 12;
+      }
+
+      .api-cards {
+        row-gap: 16px;
+      }
+
+      .access-copy {
+        grid-column: 2 / span 15;
+      }
+
+      .access-action {
+        grid-column: 19 / span 5;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        padding-top: 112px;
+      }
+
+      .nav {
+        height: auto;
+      }
+
+      .nav-inner {
+        min-height: 112px;
+        height: auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-content: center;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px 18px;
+        padding: 12px 0;
+      }
+
+      section {
+        padding: 60px 0;
+        scroll-margin-top: 128px;
+      }
+
+      h1,
+      h2,
+      .nowrap,
+      .workspace-head .body-copy,
+      .mode-head .body-copy,
+      .api-head .body-copy,
+      .access-copy .body-copy {
+        white-space: normal;
+      }
+
+      h1 {
+        font-size: 38px;
+      }
+
+      h2 {
+        font-size: 32px;
+      }
+
+      .open-hero {
+        min-height: auto;
+        padding: 64px 0 40px;
+      }
+
+      .open-hero-copy,
+      .login-stage,
+      .workspace-tabs,
+      .workspace-stage,
+      .mode-head,
+      .mode-tabs,
+      .mode-panel,
+      .access-copy,
+      .access-action,
+      .footer-logo,
+      .footer-col.support,
+      .footer-col.legal {
+        grid-column: 1 / -1;
+      }
+
+      .login-stage {
+        justify-content: flex-start;
+        margin-top: 36px;
+      }
+
+      .login-card {
+        width: 100%;
+        max-width: 520px;
+      }
+
+      .hero-points {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .workspace-section,
+      .mode-section,
+      .api-section,
+      .access-section {
+        padding-top: 72px;
+      }
+
+      .workspace-panel {
+        border-radius: 28px;
+      }
+
+      .workspace-grid {
+        row-gap: 28px;
+      }
+
+      .workspace-tabs {
+        grid-template-rows: none;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .workspace-tab,
+      .workspace-tab.active {
+        width: 100%;
+        min-height: 76px;
+        padding: 16px 18px;
+        border-radius: 20px;
+      }
+
+      .workspace-tab span,
+      .workspace-tab.active span {
+        display: block;
+      }
+
+      .workspace-stage {
+        height: auto;
+        aspect-ratio: 900 / 488;
+      }
+
+      .mode-grid {
+        row-gap: 28px;
+      }
+
+      .mode-tabs {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .mode-panel {
+        height: auto;
+        min-height: 430px;
+      }
+
+      .mode-content {
+        position: relative;
+        inset: auto;
+        display: none;
+      }
+
+      .mode-content.active {
+        display: block;
+      }
+
+      .api-card {
+        grid-column: span 12;
+      }
+
+      .access-panel {
+        border-radius: 28px;
+      }
+
+      .access-action {
+        justify-self: start;
+        margin-top: 26px;
+      }
+
+      .footer-main {
+        row-gap: 28px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page {
+        padding-top: 132px;
+      }
+
+      .shell {
+        width: calc(100vw - 32px);
+      }
+
+      .nav-inner {
+        min-height: 132px;
+      }
+
+      .logo img {
+        height: 26px;
+      }
+
+      .nav-actions {
+        width: 100%;
+        justify-content: flex-start;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      .nav-actions::-webkit-scrollbar {
+        display: none;
+      }
+
+      .pill {
+        height: 38px;
+        padding: 0 12px;
+        font-size: 13px;
+      }
+
+      .lang-toggle {
+        height: 38px;
+      }
+
+      .lang-toggle b,
+      .lang-toggle em {
+        height: 28px;
+        min-width: 32px;
+      }
+
+      h1 {
+        font-size: 34px;
+        white-space: normal;
+      }
+
+      h2 {
+        font-size: 28px;
+      }
+
+      .body-copy {
+        font-size: 15px;
+        line-height: 1.68;
+      }
+
+      .hero-points,
+      .workspace-tabs,
+      .mode-tabs {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-point,
+      .api-card,
+      .mode-tab {
+        border-radius: 22px;
+      }
+
+      .login-card {
+        padding: 36px 24px;
+        border-radius: 28px;
+      }
+
+      .workspace-panel {
+        padding: 28px 18px;
+      }
+
+      .workspace-stage {
+        aspect-ratio: 1 / 0.78;
+      }
+
+      .mode-panel {
+        padding: 24px;
+        border-radius: 28px;
+      }
+
+      .mode-content h3 {
+        font-size: 21px;
+      }
+
+      .mode-step {
+        grid-template-columns: 30px 1fr;
+        gap: 12px;
+        padding: 14px;
+      }
+
+      .api-card {
+        grid-column: 1 / -1;
+      }
+
+      .access-panel {
+        padding: 36px 0 40px;
+      }
+
+      .access-copy h2 {
+        font-size: 28px;
+      }
+
+      .primary-cta {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="nav">
+      <div class="nav-inner shell grid-24">
+        <div class="logo"><img src="开放平台.svg" alt="Q-Pass 开放平台"></div>
+        <div class="nav-actions">
+          <span class="pill" data-nav-action="admin-login">管理员登录</span>
+          <span class="pill" data-nav-action="apply-admin">申请成为超管</span>
+          <span class="lang-toggle"><b class="is-active" data-lang-option="zh">中</b><em data-lang-option="en">EN</em></span>
+        </div>
+      </div>
+    </header>
+
+    <section class="open-hero" id="open-hero">
+      <div class="shell open-hero-grid grid-24">
+        <div class="open-hero-copy">
+          <h1>登录后，直接开始接入与联调</h1>
+          <p class="body-copy">开放平台为第三方平台提供应用创建、验证字段配置、测试二维码生成和回调联调能力，已有账号可直接登录开放平台</p>
+          <div class="hero-points">
+            <article class="hero-point">
+              <strong>应用与字段配置</strong>
+              <span>创建接入应用并选择所需 Q-Pass 字段</span>
+            </article>
+            <article class="hero-point">
+              <strong>两种验证模式</strong>
+              <span>支持托管验证与自托管 OpenID4VP</span>
+            </article>
+            <article class="hero-point">
+              <strong>Sandbox 联调</strong>
+              <span>生成测试二维码、查看验证结果与回调日志</span>
+            </article>
+          </div>
+        </div>
+
+        <div class="login-stage">
+          <form class="login-card">
+            <h2>登录开放平台</h2>
+            <p>需要账号开通、密码修改与技术接入，请联系我们</p>
+            <div class="field">
+              <label for="account">账号</label>
+              <input id="account" placeholder="请输入您的账号信息" autocomplete="username">
+            </div>
+            <div class="field">
+              <label for="password">密码</label>
+              <input id="password" type="password" placeholder="请输入您的账号密码" autocomplete="current-password">
+            </div>
+            <button class="primary-cta" type="button">登录开放平台</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="workspace-section" id="workspace">
+      <div class="shell">
+        <div class="workspace-head">
+          <h2>一个工作台，完成从配置到联调</h2>
+          <p class="body-copy">登录后无需在多个页面之间寻找入口，应用、测试请求、回调日志和错误排查都围绕统一接入流程组织</p>
+        </div>
+      </div>
+      <div class="shell workspace-panel">
+        <div class="workspace-grid grid-24">
+          <div class="workspace-tabs">
+            <button class="workspace-tab active" type="button" data-workspace="app">
+              <strong>1、创建应用程序</strong>
+              <span>选择托管或OpenID4VP，配置端点，并保存您的应用程序凭据</span>
+            </button>
+            <button class="workspace-tab" type="button" data-workspace="request">
+              <strong>2、创建验证请求</strong>
+              <span>使用appSecret创建请求并接收requestId、sessionId和qrCodePayload</span>
+            </button>
+            <button class="workspace-tab" type="button" data-workspace="scan">
+              <strong>3、扫描并验证</strong>
+              <span>用户使用Q-Pass App扫描凭证，核对所申请的理赔信息，并完成理赔申请</span>
+            </button>
+            <button class="workspace-tab" type="button" data-workspace="callback">
+              <strong>4、查询回调结果</strong>
+              <span>检查验证状态、回调传递结果、HTTP响应和有效负载详情</span>
+            </button>
+          </div>
+
+          <div class="workspace-stage">
+            <img class="workspace-figure active" data-workspace-figure="app" src="配图 3.1.png" alt="创建应用程序">
+            <img class="workspace-figure" data-workspace-figure="request" src="配图 3.2.png" alt="创建验证请求">
+            <img class="workspace-figure" data-workspace-figure="scan" src="配图 3.3.png" alt="扫描并验证">
+            <img class="workspace-figure" data-workspace-figure="callback" src="配图 3.4.png" alt="查询回调结果">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mode-section" id="mode">
+      <div class="shell mode-grid grid-24">
+        <div class="mode-head">
+          <h2>根据技术架构，选择合适的验证模式</h2>
+          <p class="body-copy">快速接入可以由 Q-Pass 托管验证结果，具备自有身份基础设施的平台，也可以采用自托管 OpenID4VP</p>
+        </div>
+        <div class="mode-tabs">
+          <button class="mode-tab active" type="button" data-mode="hosted">
+            <span class="mode-tab-head">
+              <strong>模式一：托管模式</strong>
+            </span>
+            <span class="mode-bullets">
+              <span>Q-Pass 接收并验证钱包信息</span>
+              <span>将最终结果发送到 callbackUrl</span>
+              <span>直接使用开放平台 API，无需 SDK</span>
+            </span>
+          </button>
+          <button class="mode-tab" type="button" data-mode="openid">
+            <span class="mode-tab-head">
+              <strong>模式二：自托管OpenID4VP</strong>
+            </span>
+            <span class="mode-bullets">
+              <span>responseUri 直接接收 VP Token</span>
+              <span>使用验证器 SDK 或 verify-presentation</span>
+              <span>适合自有身份基础设施平台</span>
+            </span>
+          </button>
+        </div>
+
+        <div class="mode-panel">
+          <div class="mode-content active" data-mode-content="hosted">
+            <h3>更快完成首次接入</h3>
+            <p>第三方调用 Q-Pass 生成验证请求，用户亮证后，由 Q-Pass 向 callbackUrl 推送标准化结果</p>
+            <div class="mode-demo">
+              <div class="mode-steps">
+                <div class="mode-step"><b>1</b><span>创建应用并配置 callbackUrl</span></div>
+                <div class="mode-step"><b>2</b><span>调用 API 生成验证请求与二维码</span></div>
+                <div class="mode-step"><b>3</b><span>接收 verified / failed 回调结果</span></div>
+                <div class="mode-step"><b>4</b><span>失败后查看回调日志并按业务流程处理</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="mode-content" data-mode-content="openid">
+            <h3>将验证结果留在自己的系统中</h3>
+            <p>第三方使用 SDK 生成二维码，Q-Pass App 将 VP Token 返回 responseUri，由第三方自行验签、解析和校验</p>
+            <div class="mode-demo">
+              <div class="mode-steps">
+                <div class="mode-step"><b>1</b><span>配置 clientUri 与 responseUri</span></div>
+                <div class="mode-step"><b>2</b><span>生成 OpenID4VP 请求二维码</span></div>
+                <div class="mode-step"><b>3</b><span>接收并验证 VP Token</span></div>
+                <div class="mode-step"><b>4</b><span>校验 nonce、audience 与吊销状态</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="api-section" id="api">
+      <div class="shell api-head">
+        <h2>覆盖完整验证流程的核心 API</h2>
+        <p class="body-copy">从应用创建、验证请求到结果查询和亮证提交，接口按接入流程清晰组织，便于快速完成集成与联调</p>
+      </div>
+      <div class="shell api-cards grid-24">
+        <article class="api-card">
+          <span class="method">1</span>
+          <span class="endpoint">POST/v1/apps</span>
+          <p>创建第三方应用并配置 callback_url</p>
+        </article>
+        <article class="api-card">
+          <span class="method">2</span>
+          <span class="endpoint">POST/v1/verification-requests</span>
+          <p>生成一次验证请求与二维码</p>
+        </article>
+        <article class="api-card">
+          <span class="method">3</span>
+          <span class="endpoint">GET/v1/verification-requests/{id}</span>
+          <p>查询验证请求状态</p>
+        </article>
+        <article class="api-card">
+          <span class="method">4</span>
+          <span class="endpoint">POST/v1/qpass-presentations</span>
+          <p>Q-Pass App 提交亮证结果</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="access-section" id="access">
+      <div class="shell access-panel">
+        <div class="shell access-content grid-24">
+          <div class="access-copy">
+            <h2>计划接入Q-Pass？</h2>
+            <p class="body-copy">如有接入意向，欢迎联系我们，我们将协助评估接入场景，并提供账号开通与技术对接支持</p>
+          </div>
+          <div class="access-action">
+            <button class="primary-cta" type="button"><span class="access-cta-label">联系我们</span> <span>→</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="shell">
+        <div class="footer-main grid-24">
+          <div class="footer-logo"><img src="logo.svg" alt="Q-Pass"></div>
+          <div class="footer-col support">
+            <h3>帮助与支持</h3>
+            <p>帮助中心</p>
+            <p>联系我们</p>
+          </div>
+          <div class="footer-col legal">
+            <h3>法律与合规</h3>
+            <p>服务协议</p>
+            <p>政策隐私</p>
+            <p>安全与合规</p>
+          </div>
+        </div>
+        <div class="footer-legal">
+          <span>©2014-2026 企查查科技股份有限公司 版权所有</span>
+          <span>苏ICP备15042526号</span>
+          <span><img class="police" src="公安.png" alt="">苏公网安备 32059002002866号</span>
+          <span>增值电信业务经营许可证：苏ICP备B2-20180251</span>
+          <span>营业执照</span>
+          <span>企业征信备案号：04005</span>
+          <span>举报邮箱：jubao@qcc.com</span>
+          <span>违法和不良信息举报电话：400-928-2212</span>
+          <span>涉企举报专区</span>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    const nav = document.querySelector('.nav');
+    const setNavState = () => {
+      const progress = Math.min(window.scrollY / 180, 1);
+      document.documentElement.style.setProperty('--nav-border-alpha', String(0.18 + progress * 0.22));
+      nav.classList.toggle('is-scrolled', window.scrollY > 8);
+    };
+
+    window.addEventListener('scroll', setNavState, { passive: true });
+    setNavState();
+
+    const copy = {
+      zh: {
+        navAdmin: '管理员登录',
+        navApply: '申请成为超管',
+        heroTitle: '登录后，直接开始接入与联调',
+        heroCopy: '开放平台为第三方平台提供应用创建、验证字段配置、测试二维码生成和回调联调能力，已有账号可直接登录开放平台',
+        heroPoint1Title: '应用与字段配置',
+        heroPoint1Copy: '创建接入应用并选择所需 Q-Pass 字段',
+        heroPoint2Title: '两种验证模式',
+        heroPoint2Copy: '支持托管验证与自托管 OpenID4VP',
+        heroPoint3Title: 'Sandbox 联调',
+        heroPoint3Copy: '生成测试二维码、查看验证结果与回调日志',
+        loginTitle: '登录开放平台',
+        loginCopy: '需要账号开通、密码修改与技术接入，请联系我们',
+        account: '账号',
+        password: '密码',
+        accountPlaceholder: '请输入您的账号信息',
+        passwordPlaceholder: '请输入您的账号密码',
+        loginButton: '登录开放平台',
+        workspaceTitle: '一个工作台，完成从配置到联调',
+        workspaceCopy: '登录后无需在多个页面之间寻找入口，应用、测试请求、回调日志和错误排查都围绕统一接入流程组织',
+        appTitle: '1、创建应用程序',
+        appCopy: '选择托管或OpenID4VP，配置端点，并保存您的应用程序凭据',
+        requestTitle: '2、创建验证请求',
+        requestCopy: '使用appSecret创建请求并接收requestId、sessionId和qrCodePayload',
+        scanTitle: '3、扫描并验证',
+        scanCopy: '用户使用Q-Pass App扫描凭证，核对所申请的理赔信息，并完成理赔申请',
+        callbackTitle: '4、查询回调结果',
+        callbackCopy: '检查验证状态、回调传递结果、HTTP响应和有效负载详情',
+        modeTitle: '根据技术架构，选择合适的验证模式',
+        modeCopy: '快速接入可以由 Q-Pass 托管验证结果，具备自有身份基础设施的平台，也可以采用自托管 OpenID4VP',
+        hostedTitle: '模式一：托管模式',
+        hostedBullet1: 'Q-Pass 接收并验证钱包信息',
+        hostedBullet2: '将最终结果发送到 callbackUrl',
+        hostedBullet3: '直接使用开放平台 API，无需 SDK',
+        openidTitle: '模式二：自托管OpenID4VP',
+        openidBullet1: 'responseUri 直接接收 VP Token',
+        openidBullet2: '使用验证器 SDK 或 verify-presentation',
+        openidBullet3: '适合自有身份基础设施平台',
+        hostedPanelTitle: '更快完成首次接入',
+        hostedPanelCopy: '第三方调用 Q-Pass 生成验证请求，用户亮证后，由 Q-Pass 向 callbackUrl 推送标准化结果',
+        hostedStep1: '创建应用并配置 callbackUrl',
+        hostedStep2: '调用 API 生成验证请求与二维码',
+        hostedStep3: '接收 verified / failed 回调结果',
+        hostedStep4: '失败后查看回调日志并按业务流程处理',
+        openidPanelTitle: '将验证结果留在自己的系统中',
+        openidPanelCopy: '第三方使用 SDK 生成二维码，Q-Pass App 将 VP Token 返回 responseUri，由第三方自行验签、解析和校验',
+        openidStep1: '配置 clientUri 与 responseUri',
+        openidStep2: '生成 OpenID4VP 请求二维码',
+        openidStep3: '接收并验证 VP Token',
+        openidStep4: '校验 nonce、audience 与吊销状态',
+        apiTitle: '覆盖完整验证流程的核心 API',
+        apiCopy: '从应用创建、验证请求到结果查询和亮证提交，接口按接入流程清晰组织，便于快速完成集成与联调',
+        api1: '创建第三方应用并配置 callback_url',
+        api2: '生成一次验证请求与二维码',
+        api3: '查询验证请求状态',
+        api4: 'Q-Pass App 提交亮证结果',
+        accessTitle: '计划接入Q-Pass？',
+        accessCopy: '如有接入意向，欢迎联系我们，我们将协助评估接入场景，并提供账号开通与技术对接支持',
+        accessButton: '联系我们',
+        supportTitle: '帮助与支持',
+        supportHelp: '帮助中心',
+        supportContact: '联系我们',
+        legalTitle: '法律与合规',
+        legalTerms: '服务协议',
+        legalPrivacy: '政策隐私',
+        legalSecurity: '安全与合规'
+      },
+      en: {
+        navAdmin: 'Admin Login',
+        navApply: 'Apply for Super Admin',
+        heroTitle: 'Log in and start integration',
+        heroCopy: 'The Open Platform gives third-party platforms tools to create apps, configure verification fields, generate test QR codes, and debug callbacks. Existing accounts can sign in directly.',
+        heroPoint1Title: 'Apps and fields',
+        heroPoint1Copy: 'Create integration apps and choose required Q-Pass fields',
+        heroPoint2Title: 'Two verification modes',
+        heroPoint2Copy: 'Hosted verification and self-hosted OpenID4VP',
+        heroPoint3Title: 'Sandbox debugging',
+        heroPoint3Copy: 'Generate test QR codes, view results, and inspect callbacks',
+        loginTitle: 'Open Platform Login',
+        loginCopy: 'For account activation, password reset, or technical integration, please contact us.',
+        account: 'Account',
+        password: 'Password',
+        accountPlaceholder: 'Enter your account information',
+        passwordPlaceholder: 'Enter your account password',
+        loginButton: 'Log in to Open Platform',
+        workspaceTitle: 'One workspace for setup and debugging',
+        workspaceCopy: 'After login, apps, test requests, callback logs, and troubleshooting stay organized around one unified integration flow.',
+        appTitle: '1. Create application',
+        appCopy: 'Choose hosted or OpenID4VP, configure endpoints, and save your app credentials.',
+        requestTitle: '2. Create verification request',
+        requestCopy: 'Use appSecret to create a request and receive requestId, sessionId, and qrCodePayload.',
+        scanTitle: '3. Scan and verify',
+        scanCopy: 'Users scan with the Q-Pass App, review requested claim information, and complete the submission.',
+        callbackTitle: '4. Query callback result',
+        callbackCopy: 'Inspect status, callback result, HTTP response, and payload details.',
+        modeTitle: 'Choose the verification mode that fits your architecture',
+        modeCopy: 'Q-Pass can host verification results for fast integration, while platforms with their own identity infrastructure can use self-hosted OpenID4VP.',
+        hostedTitle: 'Mode 1: Hosted mode',
+        hostedBullet1: 'Q-Pass receives and verifies wallet data',
+        hostedBullet2: 'Final result is sent to callbackUrl',
+        hostedBullet3: 'Use Open Platform APIs directly, no SDK required',
+        openidTitle: 'Mode 2: Self-hosted OpenID4VP',
+        openidBullet1: 'responseUri receives the VP Token directly',
+        openidBullet2: 'Use verifier SDK or verify-presentation',
+        openidBullet3: 'For platforms with identity infrastructure',
+        hostedPanelTitle: 'Complete the first integration faster',
+        hostedPanelCopy: 'Third parties call Q-Pass to create a request. After the user presents credentials, Q-Pass pushes a standardized result to callbackUrl.',
+        hostedStep1: 'Create an app and configure callbackUrl',
+        hostedStep2: 'Call API to generate request and QR code',
+        hostedStep3: 'Receive verified / failed callback result',
+        hostedStep4: 'Review callback logs after failure and handle business flow',
+        openidPanelTitle: 'Keep verification results in your own system',
+        openidPanelCopy: 'Third parties use the SDK to generate QR codes. Q-Pass App returns VP Token to responseUri for local verification, parsing, and checks.',
+        openidStep1: 'Configure clientUri and responseUri',
+        openidStep2: 'Generate an OpenID4VP request QR code',
+        openidStep3: 'Receive and verify VP Token',
+        openidStep4: 'Check nonce, audience, and revocation status',
+        apiTitle: 'Core APIs for the full verification flow',
+        apiCopy: 'APIs are organized by integration flow, from app creation and verification requests to result queries and presentations.',
+        api1: 'Create a third-party app and configure callback_url',
+        api2: 'Generate a verification request and QR code',
+        api3: 'Query verification request status',
+        api4: 'Q-Pass App submits presentation result',
+        accessTitle: 'Planning to integrate Q-Pass?',
+        accessCopy: 'Contact us to evaluate your use case, activate an account, and get technical integration support.',
+        accessButton: 'Contact Us',
+        supportTitle: 'Help and Support',
+        supportHelp: 'Help Center',
+        supportContact: 'Contact Us',
+        legalTitle: 'Legal and Compliance',
+        legalTerms: 'Terms of Service',
+        legalPrivacy: 'Privacy Policy',
+        legalSecurity: 'Security and Compliance'
+      }
+    };
+
+    const setText = (selector, value) => {
+      const element = document.querySelector(selector);
+      if (element) {
+        element.textContent = value;
+      }
+    };
+
+    const setAttr = (selector, attr, value) => {
+      const element = document.querySelector(selector);
+      if (element) {
+        element.setAttribute(attr, value);
+      }
+    };
+
+    const setLanguage = (lang) => {
+      const activeLang = lang === 'en' ? 'en' : 'zh';
+      const text = copy[activeLang];
+      document.documentElement.lang = activeLang === 'en' ? 'en' : 'zh-CN';
+      localStorage.setItem('qpass-lang', activeLang);
+
+      document.querySelectorAll('[data-lang-option]').forEach((option) => {
+        option.classList.toggle('is-active', option.dataset.langOption === activeLang);
+      });
+
+      setText('[data-nav-action="admin-login"]', text.navAdmin);
+      setText('[data-nav-action="apply-admin"]', text.navApply);
+      setText('.open-hero-copy h1', text.heroTitle);
+      setText('.open-hero-copy > .body-copy', text.heroCopy);
+      setText('.hero-point:nth-child(1) strong', text.heroPoint1Title);
+      setText('.hero-point:nth-child(1) span', text.heroPoint1Copy);
+      setText('.hero-point:nth-child(2) strong', text.heroPoint2Title);
+      setText('.hero-point:nth-child(2) span', text.heroPoint2Copy);
+      setText('.hero-point:nth-child(3) strong', text.heroPoint3Title);
+      setText('.hero-point:nth-child(3) span', text.heroPoint3Copy);
+      setText('.login-card h2', text.loginTitle);
+      setText('.login-card > p', text.loginCopy);
+      setText('.login-card .field:first-of-type label', text.account);
+      setText('.login-card .field:nth-of-type(2) label', text.password);
+      setAttr('#account', 'placeholder', text.accountPlaceholder);
+      setAttr('#password', 'placeholder', text.passwordPlaceholder);
+      setText('.login-card .primary-cta', text.loginButton);
+      setText('.workspace-head h2', text.workspaceTitle);
+      setText('.workspace-head .body-copy', text.workspaceCopy);
+      setText('[data-workspace="app"] strong', text.appTitle);
+      setText('[data-workspace="app"] span', text.appCopy);
+      setText('[data-workspace="request"] strong', text.requestTitle);
+      setText('[data-workspace="request"] span', text.requestCopy);
+      setText('[data-workspace="scan"] strong', text.scanTitle);
+      setText('[data-workspace="scan"] span', text.scanCopy);
+      setText('[data-workspace="callback"] strong', text.callbackTitle);
+      setText('[data-workspace="callback"] span', text.callbackCopy);
+      setText('.mode-head h2', text.modeTitle);
+      setText('.mode-head .body-copy', text.modeCopy);
+      setText('[data-mode="hosted"] strong', text.hostedTitle);
+      setText('[data-mode="hosted"] .mode-bullets span:nth-child(1)', text.hostedBullet1);
+      setText('[data-mode="hosted"] .mode-bullets span:nth-child(2)', text.hostedBullet2);
+      setText('[data-mode="hosted"] .mode-bullets span:nth-child(3)', text.hostedBullet3);
+      setText('[data-mode="openid"] strong', text.openidTitle);
+      setText('[data-mode="openid"] .mode-bullets span:nth-child(1)', text.openidBullet1);
+      setText('[data-mode="openid"] .mode-bullets span:nth-child(2)', text.openidBullet2);
+      setText('[data-mode="openid"] .mode-bullets span:nth-child(3)', text.openidBullet3);
+      setText('[data-mode-content="hosted"] h3', text.hostedPanelTitle);
+      setText('[data-mode-content="hosted"] > p', text.hostedPanelCopy);
+      setText('[data-mode-content="hosted"] .mode-step:nth-child(1) span', text.hostedStep1);
+      setText('[data-mode-content="hosted"] .mode-step:nth-child(2) span', text.hostedStep2);
+      setText('[data-mode-content="hosted"] .mode-step:nth-child(3) span', text.hostedStep3);
+      setText('[data-mode-content="hosted"] .mode-step:nth-child(4) span', text.hostedStep4);
+      setText('[data-mode-content="openid"] h3', text.openidPanelTitle);
+      setText('[data-mode-content="openid"] > p', text.openidPanelCopy);
+      setText('[data-mode-content="openid"] .mode-step:nth-child(1) span', text.openidStep1);
+      setText('[data-mode-content="openid"] .mode-step:nth-child(2) span', text.openidStep2);
+      setText('[data-mode-content="openid"] .mode-step:nth-child(3) span', text.openidStep3);
+      setText('[data-mode-content="openid"] .mode-step:nth-child(4) span', text.openidStep4);
+      setText('.api-head h2', text.apiTitle);
+      setText('.api-head .body-copy', text.apiCopy);
+      setText('.api-card:nth-child(1) p', text.api1);
+      setText('.api-card:nth-child(2) p', text.api2);
+      setText('.api-card:nth-child(3) p', text.api3);
+      setText('.api-card:nth-child(4) p', text.api4);
+      setText('.access-copy h2', text.accessTitle);
+      setText('.access-copy .body-copy', text.accessCopy);
+      setText('.access-cta-label', text.accessButton);
+      setText('.footer-col.support h3', text.supportTitle);
+      setText('.footer-col.support p:nth-of-type(1)', text.supportHelp);
+      setText('.footer-col.support p:nth-of-type(2)', text.supportContact);
+      setText('.footer-col.legal h3', text.legalTitle);
+      setText('.footer-col.legal p:nth-of-type(1)', text.legalTerms);
+      setText('.footer-col.legal p:nth-of-type(2)', text.legalPrivacy);
+      setText('.footer-col.legal p:nth-of-type(3)', text.legalSecurity);
+    };
+
+    document.querySelectorAll('[data-lang-option]').forEach((option) => {
+      option.addEventListener('click', () => {
+        setLanguage(option.dataset.langOption);
+      });
+    });
+    setLanguage(localStorage.getItem('qpass-lang') || 'zh');
+    document.documentElement.dataset.langReady = 'true';
+
+    const workspaceButtons = Array.from(document.querySelectorAll('[data-workspace]'));
+    const workspaceFigures = Array.from(document.querySelectorAll('[data-workspace-figure]'));
+    const workspaceOrder = workspaceButtons.map((button) => button.dataset.workspace);
+    let workspaceIndex = Math.max(0, workspaceButtons.findIndex((button) => button.classList.contains('active')));
+    let workspaceTimer;
+
+    const setWorkspace = (step, syncIndex = true) => {
+      if (!step) {
+        return;
+      }
+      if (syncIndex) {
+        workspaceIndex = Math.max(0, workspaceOrder.indexOf(step));
+      }
+      workspaceButtons.forEach((item) => {
+        const isActive = item.dataset.workspace === step;
+        item.classList.toggle('active', isActive);
+        item.setAttribute('aria-pressed', String(isActive));
+      });
+      workspaceFigures.forEach((item) => {
+        const isActive = item.dataset.workspaceFigure === step;
+        item.classList.toggle('active', isActive);
+        item.setAttribute('aria-hidden', String(!isActive));
+      });
+    };
+
+    const startWorkspaceAuto = () => {
+      window.clearInterval(workspaceTimer);
+      if (!workspaceOrder.length) {
+        return;
+      }
+      workspaceTimer = window.setInterval(() => {
+        workspaceIndex = (workspaceIndex + 1) % workspaceOrder.length;
+        setWorkspace(workspaceOrder[workspaceIndex], false);
+      }, 1600);
+    };
+
+    workspaceButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        setWorkspace(button.dataset.workspace);
+        startWorkspaceAuto();
+      });
+    });
+    setWorkspace(workspaceOrder[workspaceIndex] || 'app');
+    startWorkspaceAuto();
+
+    document.querySelectorAll('[data-mode]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const mode = button.dataset.mode;
+        document.querySelectorAll('[data-mode]').forEach((item) => {
+          item.classList.toggle('active', item.dataset.mode === mode);
+        });
+        document.querySelectorAll('[data-mode-content]').forEach((item) => {
+          item.classList.toggle('active', item.dataset.modeContent === mode);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

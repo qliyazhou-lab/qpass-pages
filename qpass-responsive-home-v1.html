@@ -1,0 +1,1914 @@
+<!doctype html>
+<html lang="zh-CN" data-lang-ready="false">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Q-PASS Responsive Home V1</title>
+  <style>
+    :root {
+      --page: 1440px;
+      --shell: 1200px;
+      --gap: 16px;
+      --bg: #ffffff;
+      --ink: #19191c;
+      --muted: #737680;
+      --soft: #f2f2f6;
+      --soft-2: #f7f8fa;
+      --line: #e4e5eb;
+      --black: #171719;
+      --shadow: 0 24px 70px rgba(31, 34, 44, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-width: var(--page);
+      background: var(--bg);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue",
+        "PingFang SC", "Microsoft YaHei",
+        "Noto Sans CJK SC", "WenQuanYi Micro Hei",
+        sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      width: var(--page);
+      margin: 0 auto;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    html[data-lang-ready="false"] .page {
+      visibility: hidden;
+    }
+
+    .shell {
+      width: var(--shell);
+      margin: 0 auto;
+    }
+
+    .grid-24 {
+      display: grid;
+      grid-template-columns: repeat(24, minmax(0, 1fr));
+      column-gap: var(--gap);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      font-size: 50px;
+      line-height: 1.1;
+      font-weight: 880;
+      white-space: nowrap;
+    }
+
+    h2 {
+      font-size: 44px;
+      line-height: 1.18;
+      font-weight: 860;
+    }
+
+    h3 {
+      font-size: 22px;
+      line-height: 1.3;
+      font-weight: 820;
+    }
+
+    .body-copy {
+      color: #676a73;
+      font-size: 18px;
+      line-height: 1.74;
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    span,
+    a,
+    .body-copy {
+      overflow-wrap: break-word;
+    }
+
+    .nowrap {
+      white-space: nowrap;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      width: 100%;
+      height: 82px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-inner {
+      height: 82px;
+      align-items: center;
+    }
+
+    .logo {
+      grid-column: 1 / span 4;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .logo img {
+      display: block;
+      width: 112px;
+      height: auto;
+    }
+
+    .nav-links {
+      grid-column: 5 / span 12;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      color: #5f626b;
+      font-size: 15px;
+      font-weight: 680;
+      white-space: nowrap;
+    }
+
+    .nav-links span:first-child {
+      color: var(--ink);
+    }
+
+    .nav-actions {
+      grid-column: 17 / span 8;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-links,
+    .nav-actions,
+    .hero-copy-col,
+    .role-card,
+    .feature-card,
+    .step,
+    .security-card,
+    .platform-intro,
+    .platform-item,
+    .footer-col {
+      min-width: 0;
+    }
+
+    .pill,
+    .download-btn,
+    .platform-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .pill {
+      height: 42px;
+      gap: 8px;
+      padding: 0 18px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 760;
+    }
+
+    .lang-toggle {
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      font-size: 13px;
+      font-weight: 780;
+      white-space: nowrap;
+    }
+
+    .lang-toggle b,
+    .lang-toggle em {
+      height: 32px;
+      min-width: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: transparent;
+      font-style: normal;
+    }
+
+    .lang-toggle b {
+      color: #747780;
+    }
+
+    .lang-toggle em {
+      color: #747780;
+    }
+
+    section {
+      padding: 78px 0;
+      background: #fff;
+    }
+
+    .hero {
+      min-height: 700px;
+      padding: 66px 0 48px;
+      background: #fff;
+    }
+
+    .hero-grid {
+      align-items: center;
+    }
+
+    .hero-copy-col {
+      grid-column: 1 / span 15;
+      align-self: center;
+    }
+
+    .hero-copy {
+      width: 700px;
+      max-width: 100%;
+      margin-top: 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .download-btn {
+      position: relative;
+      height: 50px;
+      gap: 10px;
+      padding: 0 24px;
+      border: 1px solid var(--black);
+      background: var(--black);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 820;
+    }
+
+    .download-btn img {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+
+    .download-item {
+      position: relative;
+      display: inline-flex;
+    }
+
+    .download-popover {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      z-index: 6;
+      width: 100%;
+      padding: 20px 16px 16px;
+      border-radius: 24px;
+      background: #fff;
+      box-shadow: 0 18px 50px rgb(23 23 25 / 10%);
+      text-align: center;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translate(-50%, 8px);
+      transition: opacity 160ms ease, visibility 160ms ease, transform 160ms ease;
+    }
+
+    .download-btn:hover + .download-popover,
+    .download-btn.is-open + .download-popover {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0);
+    }
+
+    .qr-code {
+      width: 100%;
+      aspect-ratio: 1;
+      display: block;
+      margin: 0 auto;
+      object-fit: contain;
+    }
+
+    .download-qr-label {
+      display: block;
+      margin-top: 12px;
+      color: var(--ink);
+      font-size: 12px;
+      line-height: 1.3;
+      font-weight: 820;
+    }
+
+    .hero-stats {
+      display: flex;
+      align-items: flex-start;
+      gap: 32px;
+      width: max-content;
+      max-width: 100%;
+      margin-top: 100px;
+    }
+
+    .stat {
+      position: relative;
+      padding: 0;
+      text-align: left;
+    }
+
+    .stat:first-child {
+      padding-left: 0;
+    }
+
+    .stat + .stat {
+      padding-left: 32px;
+    }
+
+    .stat + .stat::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1px;
+      height: 56px;
+      background: #e6e7ed;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 880;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 10px;
+      color: #7a7d86;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .visual-stage {
+      grid-column: 17 / span 8;
+      height: 616px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-phone {
+      width: 473px;
+      height: 616px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-phone img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .center-head {
+      max-width: 920px;
+      margin: 0 auto 44px;
+      text-align: center;
+    }
+
+    .center-head .body-copy {
+      margin-top: 18px;
+    }
+
+    .product-section {
+      padding-top: 62px;
+    }
+
+    .product-panel {
+      padding: 72px 48px 76px;
+      border-radius: 34px;
+      background: url("产品介绍区域 1.avif") center / cover no-repeat;
+    }
+
+    .product-panel .center-head {
+      margin-bottom: 44px;
+    }
+
+    .role-grid {
+      align-items: stretch;
+    }
+
+    .role-card {
+      grid-column: span 8;
+      min-height: 338px;
+      padding: 36px 30px 28px;
+      border: 0;
+      border-radius: 26px;
+      background: rgba(255, 255, 255, 0.72);
+      text-align: center;
+    }
+
+    .role-icon {
+      width: 66px;
+      height: 66px;
+      margin: 0 auto 24px;
+      border-radius: 18px;
+      background: #f2f2f2;
+      display: grid;
+      place-items: center;
+    }
+
+    .role-icon.member {
+      background: #f2f2f2;
+    }
+
+    .role-icon.platform-icon {
+      background: #f2f2f2;
+    }
+
+    .role-icon img {
+      width: 34px;
+      height: 34px;
+      display: block;
+      object-fit: contain;
+    }
+
+    .role-card h3 {
+      margin-bottom: 14px;
+    }
+
+    .role-summary {
+      min-height: 50px;
+      color: #777a83;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .role-points {
+      display: grid;
+      gap: 10px;
+      margin-top: 26px;
+      text-align: left;
+    }
+
+    .role-points span {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 18px;
+      border-radius: 12px;
+      background: #fff;
+      color: #19191c;
+      font-size: 15px;
+      font-weight: 720;
+    }
+
+    .role-points span::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #e8e8e8;
+      flex: 0 0 auto;
+    }
+
+    .credential-section {
+      padding-top: 72px;
+    }
+
+    .credential-body {
+      margin-top: 54px;
+      align-items: center;
+    }
+
+    .credential-visual {
+      grid-column: 4 / span 8;
+      display: flex;
+      justify-content: center;
+    }
+
+    .credential-phone {
+      width: 388px;
+      height: 506px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .credential-phone img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .feature-list {
+      grid-column: 13 / span 9;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+      margin-top: 0;
+    }
+
+    .feature-card {
+      padding: 28px 30px;
+      border: 1px solid #f2f2f6;
+      border-radius: 22px;
+      background: #fff;
+      text-align: left;
+      word-break: keep-all;
+    }
+
+    .feature-card h3 {
+      font-size: 22px;
+    }
+
+    .feature-card p,
+    .step p,
+    .security-card p,
+    .platform-item p {
+      margin-top: 10px;
+      color: #747680;
+      font-size: 15px;
+      line-height: 1.66;
+    }
+
+    .feature-card p {
+      overflow-wrap: normal;
+    }
+
+    .steps {
+      align-items: stretch;
+    }
+
+    .step {
+      grid-column: span 6;
+      min-height: 244px;
+      padding: 28px;
+      border: 1px solid #f2f2f6;
+      border-radius: 24px;
+      background: #fff;
+    }
+
+    .step-index {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      margin-bottom: 32px;
+      border-radius: 50%;
+      background: #f0f1f5;
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 820;
+    }
+
+    .security-band {
+      padding: 70px 0;
+    }
+
+    .security-copy {
+      grid-column: 5 / span 16;
+      align-self: auto;
+      margin-bottom: 54px;
+      text-align: center;
+    }
+
+    .security-copy .body-copy {
+      max-width: none;
+      margin: 18px auto 0;
+      white-space: nowrap;
+    }
+
+    .security-grid {
+      grid-column: 3 / span 20;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .security-card {
+      padding: 38px 30px 34px;
+      border: 0;
+      border-radius: 34px;
+      background: linear-gradient(140deg, rgb(245 249 255), rgb(245 249 255 / 30%));
+      text-align: center;
+    }
+
+    .security-card:nth-child(2) {
+      background: linear-gradient(140deg, rgb(244 251 251), rgb(244 251 251 / 30%));
+    }
+
+    .security-card:nth-child(3) {
+      background: linear-gradient(140deg, rgb(247 250 242), rgb(247 250 242 / 30%));
+    }
+
+    .security-symbol {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 22px;
+    }
+
+    .security-symbol img {
+      width: 36px;
+      height: 36px;
+      display: block;
+      object-fit: contain;
+    }
+
+    .security-card h3 {
+      font-size: 22px;
+    }
+
+    .platform {
+      padding: 70px 0 78px;
+    }
+
+    .platform-panel {
+      min-height: 410px;
+      padding: 52px 0 54px;
+      border-radius: 34px;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.34)),
+        url("产品介绍区域 1.avif") center / cover no-repeat;
+      color: var(--ink);
+      overflow: hidden;
+    }
+
+    .platform-content {
+      align-items: start;
+    }
+
+    .platform-headline {
+      margin-bottom: 42px;
+      text-align: center;
+    }
+
+    .platform h2 {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .platform .body-copy {
+      margin-top: 18px;
+      color: #676a73;
+    }
+
+    .platform-intro {
+      grid-column: 5 / span 16;
+      text-align: center;
+    }
+
+    .platform-intro h3 {
+      color: var(--ink);
+      font-size: 24px;
+    }
+
+    .platform-intro .body-copy {
+      max-width: none;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .platform-grid {
+      grid-column: 2 / span 22;
+      margin-top: 36px;
+      column-gap: 16px;
+    }
+
+    .platform-item {
+      grid-column: span 6;
+      padding: 22px;
+      border: 0;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.68);
+    }
+
+    .platform-item h3 {
+      color: var(--ink);
+      font-size: 19px;
+    }
+
+    .platform-item p {
+      color: #747680;
+      font-size: 14px;
+    }
+
+    .platform-cta {
+      grid-column: 10 / span 6;
+      height: 58px;
+      margin-top: 34px;
+      gap: 10px;
+      padding: 0 28px;
+      background: var(--black);
+      color: #fff;
+      font-size: 18px;
+      font-weight: 820;
+    }
+
+    .platform-cta .cta-label {
+      min-width: 0;
+      font-size: inherit;
+      line-height: 1.2;
+      overflow-wrap: normal;
+      white-space: nowrap;
+    }
+
+    .platform-cta span:last-child {
+      flex: 0 0 auto;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    html[lang="en"] h1,
+    html[lang="en"] .nowrap,
+    html[lang="en"] .security-copy .body-copy {
+      white-space: normal;
+    }
+
+    html[lang="en"] h1,
+    html[lang="en"] h2,
+    html[lang="en"] h3,
+    html[lang="en"] .body-copy,
+    html[lang="en"] .role-summary,
+    html[lang="en"] .role-points span,
+    html[lang="en"] .feature-card,
+    html[lang="en"] .feature-card p,
+    html[lang="en"] .step p,
+    html[lang="en"] .security-card p,
+    html[lang="en"] .platform-item p,
+    html[lang="en"] .footer-col p {
+      word-break: normal;
+      overflow-wrap: break-word;
+      hyphens: auto;
+    }
+
+    html[lang="en"] .step p {
+      hyphens: none;
+      overflow-wrap: normal;
+      word-break: normal;
+    }
+
+    html[lang="en"] .feature-card,
+    html[lang="en"] .feature-card p {
+      word-break: normal;
+    }
+
+    html[lang="en"] .hero-stats {
+      width: 100%;
+      max-width: 700px;
+      gap: 24px;
+    }
+
+    html[lang="en"] .stat {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+
+    html[lang="en"] .stat + .stat {
+      padding-left: 24px;
+    }
+
+    html[lang="en"] .stat span {
+      max-width: 160px;
+    }
+
+    html[lang="en"] .role-points span {
+      min-height: auto;
+      align-items: flex-start;
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+
+    html[lang="en"] .nav-links {
+      grid-column: 5 / span 10;
+      gap: 22px;
+    }
+
+    html[lang="en"] .nav-actions {
+      grid-column: 15 / span 10;
+      gap: 8px;
+    }
+
+    html[lang="en"] .pill {
+      padding-left: 14px;
+      padding-right: 14px;
+    }
+
+    html[lang="en"] .platform-cta {
+      grid-column: 9 / span 8;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    html[lang="en"] .platform-cta .cta-label {
+      font-size: clamp(14px, 1.35vw, 18px);
+    }
+
+    html[lang="en"] .footer-col h3 {
+      white-space: nowrap;
+    }
+
+    .footer {
+      padding: 58px 0 34px;
+      border-top: 1px solid rgb(228 229 235 / 40%);
+      color: #8c8f97;
+      background: #fff;
+    }
+
+    .footer-main {
+      align-items: start;
+      margin-bottom: 54px;
+    }
+
+    .footer-logo {
+      grid-column: 1 / span 10;
+    }
+
+    .footer-logo img {
+      width: 118px;
+      height: auto;
+      display: block;
+    }
+
+    .footer-col.support {
+      grid-column: 16 / span 4;
+    }
+
+    .footer-col.legal {
+      grid-column: 21 / span 4;
+    }
+
+    .footer-col h3 {
+      margin-bottom: 18px;
+      color: var(--ink);
+      font-size: 20px;
+      line-height: 1.3;
+      font-weight: 820;
+    }
+
+    .footer-col p {
+      margin-top: 12px;
+      color: #6f737c;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .footer-legal {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px 20px;
+      color: #9699a1;
+      font-size: 12px;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    .police {
+      width: 16px;
+      height: 16px;
+      vertical-align: -4px;
+      margin-right: 5px;
+    }
+
+    html,
+    body {
+      min-width: 0;
+      scroll-behavior: smooth;
+    }
+
+    .page {
+      width: 100%;
+      max-width: none;
+      padding-top: 82px;
+    }
+
+    .shell {
+      width: min(var(--shell), calc(100vw - 48px));
+    }
+
+    .nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      border-bottom-color: rgb(228 229 235 / var(--nav-border-alpha, 0.18));
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: border-bottom-color 180ms ease, background 180ms ease;
+    }
+
+    .nav.is-scrolled {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .nav-links span,
+    .pill,
+    .download-btn,
+    .platform-cta,
+    .lang-toggle {
+      cursor: pointer;
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background 160ms ease, color 160ms ease, opacity 160ms ease;
+    }
+
+    .nav-links span,
+    .nav-links span:first-child {
+      color: #5f626b;
+    }
+
+    .nav-links span.is-active {
+      color: var(--ink);
+    }
+
+    .lang-toggle b,
+    .lang-toggle em {
+      cursor: pointer;
+      background: transparent;
+      color: #747780;
+      transition: background 160ms ease, color 160ms ease;
+    }
+
+    .lang-toggle .is-active {
+      background: var(--black);
+      color: #fff;
+    }
+
+    .nav-links span:hover {
+      color: var(--ink);
+    }
+
+    .pill:hover,
+    .lang-toggle:hover {
+      transform: translateY(-1px);
+      border-color: #cfd1d8;
+      box-shadow: 0 10px 26px rgb(23 23 25 / 6%);
+    }
+
+    .download-btn:hover,
+    .platform-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgb(23 23 25 / 16%);
+    }
+
+    .platform-cta {
+      text-decoration: none;
+    }
+
+    section {
+      scroll-margin-top: 104px;
+    }
+
+    @media (max-width: 1180px) {
+      .shell {
+        width: min(1000px, calc(100vw - 48px));
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+
+      h2 {
+        font-size: 36px;
+      }
+
+      .nav-links {
+        gap: 18px;
+        font-size: 14px;
+      }
+
+      .nav-actions {
+        gap: 8px;
+      }
+
+      .pill {
+        padding: 0 14px;
+      }
+
+      .hero-copy-col {
+        grid-column: 1 / span 14;
+      }
+
+      .visual-stage {
+        grid-column: 16 / span 9;
+        height: 520px;
+      }
+
+      .hero-phone {
+        width: 400px;
+        height: 520px;
+      }
+
+      .hero-stats {
+        margin-top: 64px;
+        gap: 22px;
+      }
+
+      .stat + .stat {
+        padding-left: 22px;
+      }
+
+      .product-panel {
+        padding: 60px 36px 64px;
+      }
+
+      .role-card {
+        padding: 32px 22px 26px;
+      }
+
+      .credential-visual {
+        grid-column: 2 / span 9;
+      }
+
+      .feature-list {
+        grid-column: 12 / span 12;
+      }
+
+      .security-grid {
+        grid-column: 1 / -1;
+      }
+
+      .platform-grid {
+        grid-column: 1 / -1;
+      }
+
+      .platform-panel > .platform-content {
+        width: calc(100% - 48px);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        padding-top: 112px;
+      }
+
+      .nav {
+        height: auto;
+      }
+
+      .nav-inner {
+        min-height: 112px;
+        height: auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-content: center;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px 18px;
+        padding: 12px 0;
+      }
+
+      .logo,
+      .nav-links,
+      .nav-actions {
+        grid-column: auto;
+      }
+
+      .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: flex-start;
+        gap: 22px;
+        overflow-x: auto;
+        padding-bottom: 2px;
+        scrollbar-width: none;
+      }
+
+      .nav-links::-webkit-scrollbar {
+        display: none;
+      }
+
+      section {
+        padding: 60px 0;
+        scroll-margin-top: 128px;
+      }
+
+      h1,
+      h2,
+      .nowrap,
+      .security-copy .body-copy {
+        white-space: normal;
+      }
+
+      h1 {
+        font-size: 38px;
+      }
+
+      h2 {
+        font-size: 32px;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 60px 0 44px;
+      }
+
+      .hero-copy-col,
+      .visual-stage,
+      .credential-visual,
+      .feature-list,
+      .security-copy,
+      .platform-intro,
+      .platform-grid,
+      .platform-cta,
+      .footer-logo,
+      .footer-col.support,
+      .footer-col.legal {
+        grid-column: 1 / -1;
+      }
+
+      .visual-stage {
+        height: auto;
+        margin-top: 36px;
+      }
+
+      .hero-phone {
+        width: min(420px, 80vw);
+        height: auto;
+      }
+
+      .hero-phone img {
+        height: auto;
+      }
+
+      .hero-stats {
+        width: 100%;
+        flex-wrap: wrap;
+      }
+
+      .product-panel,
+      .platform-panel {
+        border-radius: 28px;
+      }
+
+      .role-card,
+      .step,
+      .platform-item {
+        grid-column: 1 / -1;
+      }
+
+      .role-grid,
+      .steps,
+      .platform-grid {
+        row-gap: 16px;
+      }
+
+      .credential-body {
+        row-gap: 34px;
+      }
+
+      .credential-phone {
+        width: min(360px, 78vw);
+        height: auto;
+      }
+
+      .credential-phone img {
+        height: auto;
+      }
+
+      .security-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-main {
+        row-gap: 28px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page {
+        padding-top: 132px;
+      }
+
+      .shell {
+        width: calc(100vw - 32px);
+      }
+
+      .nav-inner {
+        min-height: 132px;
+      }
+
+      .logo img {
+        width: 104px;
+      }
+
+      .nav-actions {
+        width: 100%;
+        justify-content: flex-start;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      .nav-actions::-webkit-scrollbar {
+        display: none;
+      }
+
+      .pill {
+        height: 38px;
+        padding: 0 12px;
+        font-size: 13px;
+      }
+
+      .lang-toggle {
+        height: 38px;
+      }
+
+      .lang-toggle b,
+      .lang-toggle em {
+        height: 28px;
+        min-width: 32px;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      h2 {
+        font-size: 28px;
+      }
+
+      .body-copy {
+        font-size: 15px;
+        line-height: 1.68;
+      }
+
+      .hero-actions {
+        flex-wrap: wrap;
+      }
+
+      .download-btn {
+        width: auto;
+      }
+
+      .download-item {
+        width: auto;
+      }
+
+      .hero-stats {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .stat + .stat {
+        padding-left: 0;
+      }
+
+      .stat + .stat::before {
+        display: none;
+      }
+
+      .product-panel {
+        padding: 36px 18px 40px;
+      }
+
+      .role-card,
+      .step,
+      .security-card,
+      .platform-item {
+        border-radius: 22px;
+      }
+
+      .platform-panel {
+        min-height: auto;
+        padding: 36px 0 40px;
+      }
+
+      .platform-panel > .platform-content {
+        width: calc(100% - 32px);
+      }
+
+      .platform-cta {
+        grid-column: 1 / -1;
+        width: 100%;
+        height: auto;
+        min-height: 58px;
+      }
+
+      html[lang="en"] .platform-cta .cta-label {
+        white-space: normal;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="nav">
+      <div class="nav-inner shell grid-24">
+        <div class="logo"><img src="logo.svg" alt="Q-Pass"></div>
+        <nav class="nav-links" aria-label="主导航">
+          <span data-scroll-target="product">产品介绍</span>
+          <span data-scroll-target="credential">数字凭证</span>
+          <span data-scroll-target="process">使用流程</span>
+          <span data-scroll-target="security">平台安全机制</span>
+          <span data-scroll-target="platform">开放平台</span>
+        </nav>
+        <div class="nav-actions">
+          <span class="pill" data-nav-action="admin-login">管理员登录</span>
+          <span class="pill" data-nav-action="apply-admin">申请成为超管</span>
+          <span class="lang-toggle"><b class="is-active" data-lang-option="zh">中</b><em data-lang-option="en">EN</em></span>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero" id="home">
+      <div class="shell hero-grid grid-24">
+        <div class="hero-copy-col">
+          <h1>一次颁发，随时出示，可信通行</h1>
+          <p class="body-copy hero-copy">Q-Pass 让企业为组织成员颁发可验证的数字身份凭证。成员在 App 中安全持有，第三方平台扫码即可完成身份与授权核验</p>
+          <div class="hero-actions">
+            <span class="download-item">
+              <span class="download-btn" tabindex="0"><img src="ios.svg" alt=""><span class="download-label">iOS下载</span></span>
+              <span class="download-popover" aria-hidden="true">
+                <img class="qr-code qr-code-ios" src="二维码.png" alt="iOS下载二维码">
+                <span class="download-qr-label">手机扫码下载</span>
+              </span>
+            </span>
+            <span class="download-item">
+              <span class="download-btn" tabindex="0"><img src="安卓.svg" alt=""><span class="download-label">安卓下载</span></span>
+              <span class="download-popover" aria-hidden="true">
+                <img class="qr-code qr-code-android" src="二维码.png" alt="安卓下载二维码">
+                <span class="download-qr-label">手机扫码下载</span>
+              </span>
+            </span>
+          </div>
+          <div class="hero-stats">
+            <div class="stat"><strong>3 亿</strong><span>企业主体数据基础</span></div>
+            <div class="stat"><strong>&lt;50ms</strong><span>本地离线验签延迟</span></div>
+            <div class="stat"><strong>0</strong><span>用户行为数据上传</span></div>
+          </div>
+        </div>
+
+        <div class="visual-stage" aria-label="Q-Pass 产品视觉">
+          <div class="hero-phone">
+            <img src="首页配图 2.png" alt="Q-Pass App 凭证首页">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="product-section" id="product">
+      <div class="shell product-panel">
+        <div class="center-head">
+          <h2 class="nowrap">一张凭证，连接企业、成员与第三方平台</h2>
+          <p class="body-copy">Q-Pass 将“谁颁发、谁持有、谁验证”清晰分离，让身份核验既可信，又不牺牲个人数据控制权</p>
+        </div>
+
+        <div class="role-grid grid-24">
+          <article class="role-card">
+            <div class="role-icon admin"><img src="企业管理员.svg" alt=""></div>
+            <h3>企业管理员</h3>
+            <p class="role-summary">统一颁发与管理，完成企业授权后管理组织成员凭证</p>
+            <div class="role-points">
+              <span>批量颁发凭证</span>
+              <span>更新成员权限</span>
+              <span>随时吊销凭证</span>
+            </div>
+          </article>
+          <article class="role-card">
+            <div class="role-icon member"><img src="企业成员.svg" alt=""></div>
+            <h3>企业成员</h3>
+            <p class="role-summary">随身持有与亮证，需要时自主选择出示必要字段</p>
+            <div class="role-points">
+              <span>安全保存在设备</span>
+              <span>自主确认出示</span>
+              <span>无需反复提交材料</span>
+            </div>
+          </article>
+          <article class="role-card">
+            <div class="role-icon platform-icon"><img src="第三方平台.svg" alt=""></div>
+            <h3>第三方平台</h3>
+            <p class="role-summary">扫码即可完成验签，快速核验企业归属与授权范围</p>
+            <div class="role-points">
+              <span>配置验证字段</span>
+              <span>扫码本地验签</span>
+              <span>返回可信结果</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="credential-section" id="credential">
+      <div class="shell">
+        <div class="center-head">
+          <h2 class="nowrap">数字身份不只是“展示”，更可以被验证</h2>
+          <p class="body-copy">每张 Q-Pass 都带有可验证的签名、企业信息、持有人信息和有效状态，第三方只获取本次业务所需字段</p>
+        </div>
+
+        <div class="credential-body grid-24">
+          <div class="credential-visual">
+            <div class="credential-phone">
+              <img src="数字凭证配图 2.png" alt="Q-Pass 凭证详情">
+            </div>
+          </div>
+
+          <div class="feature-list grid-24">
+            <article class="feature-card">
+              <h3>企业签发，来源明确</h3>
+              <p>凭证由经授权的企业管理员签发，身份来源可追溯</p>
+            </article>
+            <article class="feature-card">
+              <h3>按需出示，字段最小化</h3>
+              <p>用户可查看本次请求内容，只授权必要字段</p>
+            </article>
+            <article class="feature-card">
+              <h3>实时状态，可随时吊销</h3>
+              <p>成员离职、权限变更或设备风险时，可立即更新凭证状态</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="process" id="process">
+      <div class="shell">
+        <div class="center-head">
+          <h2>从企业授权到第三方验签，四步完成</h2>
+          <p class="body-copy">企业负责签发，成员自主持有，第三方按业务需要验证，形成完整可信闭环</p>
+        </div>
+        <div class="steps grid-24">
+          <article class="step">
+            <div class="step-index">1</div>
+            <h3>企业超管注册</h3>
+            <p>企业负责人或授权管理员通过数字执照完成企业身份确认</p>
+          </article>
+          <article class="step">
+            <div class="step-index">2</div>
+            <h3>配置组织与权限</h3>
+            <p>按照部门、角色和管理范围配置组织成员与凭证字段</p>
+          </article>
+          <article class="step">
+            <div class="step-index">3</div>
+            <h3>向成员颁发 Q-Pass</h3>
+            <p>成员在 App 中完成绑定并安全持有自己的数字身份凭证</p>
+          </article>
+          <article class="step">
+            <div class="step-index">4</div>
+            <h3>扫码亮证与验签</h3>
+            <p>第三方平台发起验证请求，成员确认后即可返回可信结果</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="security-band" id="security">
+      <div class="shell grid-24">
+        <div class="security-copy">
+          <h2>从凭证生成到验证，安全机制贯穿全流程</h2>
+          <p class="body-copy">Q-Pass 通过设备级密钥保护、最小化信息披露和可撤销机制，降低身份数据泄露与滥用风险</p>
+        </div>
+        <div class="security-grid">
+          <article class="security-card">
+            <div class="security-symbol"><img src="钥匙 1.svg" alt=""></div>
+            <h3>私钥留在设备中</h3>
+            <p>密钥在设备安全环境中生成与使用，服务端不接触用户私钥</p>
+          </article>
+          <article class="security-card">
+            <div class="security-symbol"><img src="验签 1.svg" alt=""></div>
+            <h3>离线即可完成验签</h3>
+            <p>第三方可在本地验证凭证签名，减少对中心化在线服务的依赖</p>
+          </article>
+          <article class="security-card">
+            <div class="security-symbol"><img src="更新 1.svg" alt=""></div>
+            <h3>状态可更新与吊销</h3>
+            <p>企业可根据成员状态和权限变化更新凭证，避免过期身份继续使用</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="platform" id="platform">
+      <div class="shell platform-headline">
+        <h2>把可信数字身份接入你的业务</h2>
+        <p class="body-copy">创建应用、配置验证字段、生成测试二维码，并通过 Sandbox 完成回调联调</p>
+      </div>
+      <div class="shell platform-panel">
+        <div class="shell platform-content grid-24">
+          <div class="platform-intro">
+            <h3>为第三方平台提供简单、清晰的验证接入</h3>
+            <p class="body-copy">支持托管验证与自托管 OpenID4VP 两种模式，开发者无需理解凭证底层结构，也能快速完成接入</p>
+          </div>
+          <div class="platform-grid grid-24">
+            <article class="platform-item">
+              <h3>创建应用</h3>
+              <p>配置场景与回调地址</p>
+            </article>
+            <article class="platform-item">
+              <h3>选择字段</h3>
+              <p>仅请求业务所需信息</p>
+            </article>
+            <article class="platform-item">
+              <h3>Sandbox 测试</h3>
+              <p>生成二维码并模拟亮证</p>
+            </article>
+            <article class="platform-item">
+              <h3>回调重放</h3>
+              <p>快速定位与修复问题</p>
+            </article>
+          </div>
+          <a class="platform-cta" href="qpass-responsive-open-platform-v1.html" target="_blank" rel="noopener"><span class="cta-label">进入开放平台</span> <span>→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="shell">
+        <div class="footer-main grid-24">
+          <div class="footer-logo"><img src="logo.svg" alt="Q-Pass"></div>
+          <div class="footer-col support">
+            <h3>帮助与支持</h3>
+            <p>帮助中心</p>
+            <p>联系我们</p>
+          </div>
+          <div class="footer-col legal">
+            <h3>法律与合规</h3>
+            <p>服务协议</p>
+            <p>政策隐私</p>
+            <p>安全与合规</p>
+          </div>
+        </div>
+        <div class="footer-legal">
+          <span>©2014-2026 企查查科技股份有限公司 版权所有</span>
+          <span>苏ICP备15042526号</span>
+          <span><img class="police" src="公安.png" alt="">苏公网安备 32059002002866号</span>
+          <span>增值电信业务经营许可证：苏ICP备B2-20180251</span>
+          <span>营业执照</span>
+          <span>企业征信备案号：04005</span>
+          <span>举报邮箱：jubao@qcc.com</span>
+          <span>违法和不良信息举报电话：400-928-2212</span>
+          <span>涉企举报专区</span>
+        </div>
+      </div>
+    </footer>
+  </main>
+  <script>
+    const nav = document.querySelector('.nav');
+    const navItems = [...document.querySelectorAll('[data-scroll-target]')];
+    const sectionAnchors = navItems.map((item) => ({
+      id: item.dataset.scrollTarget,
+      item,
+      section: document.getElementById(item.dataset.scrollTarget),
+    })).filter((entry) => entry.section);
+
+    const translations = {
+      zh: {
+        title: 'Q-PASS Responsive Home V1',
+        navProduct: '产品介绍',
+        navCredential: '数字凭证',
+        navProcess: '使用流程',
+        navSecurity: '平台安全机制',
+        navPlatform: '开放平台',
+        adminLogin: '管理员登录',
+        applyAdmin: '申请成为超管',
+        heroTitle: '一次颁发，随时出示，可信通行',
+        heroCopy: 'Q-Pass 让企业为组织成员颁发可验证的数字身份凭证。成员在 App 中安全持有，第三方平台扫码即可完成身份与授权核验',
+        iosDownload: 'iOS下载',
+        androidDownload: '安卓下载',
+        qrLabel: '手机扫码下载',
+        statOne: '企业主体数据基础',
+        statTwo: '本地离线验签延迟',
+        statThree: '用户行为数据上传',
+        productTitle: '一张凭证，连接企业、成员与第三方平台',
+        productCopy: 'Q-Pass 将“谁颁发、谁持有、谁验证”清晰分离，让身份核验既可信，又不牺牲个人数据控制权',
+        adminRole: '企业管理员',
+        adminSummary: '统一颁发与管理，完成企业授权后管理组织成员凭证',
+        adminPointOne: '批量颁发凭证',
+        adminPointTwo: '更新成员权限',
+        adminPointThree: '随时吊销凭证',
+        memberRole: '企业成员',
+        memberSummary: '随身持有与亮证，需要时自主选择出示必要字段',
+        memberPointOne: '安全保存在设备',
+        memberPointTwo: '自主确认出示',
+        memberPointThree: '无需反复提交材料',
+        platformRole: '第三方平台',
+        platformSummary: '扫码即可完成验签，快速核验企业归属与授权范围',
+        platformPointOne: '配置验证字段',
+        platformPointTwo: '扫码本地验签',
+        platformPointThree: '返回可信结果',
+        credentialTitle: '数字身份不只是“展示”，更可以被验证',
+        credentialCopy: '每张 Q-Pass 都带有可验证的签名、企业信息、持有人信息和有效状态，第三方只获取本次业务所需字段',
+        featureOneTitle: '企业签发，来源明确',
+        featureOneCopy: '凭证由经授权的企业管理员签发，身份来源可追溯',
+        featureTwoTitle: '按需出示，字段最小化',
+        featureTwoCopy: '用户可查看本次请求内容，只授权必要字段',
+        featureThreeTitle: '实时状态，可随时吊销',
+        featureThreeCopy: '成员离职、权限变更或设备风险时，可立即更新凭证状态',
+        processTitle: '从企业授权到第三方验签，四步完成',
+        processCopy: '企业负责签发，成员自主持有，第三方按业务需要验证，形成完整可信闭环',
+        stepOneTitle: '企业超管注册',
+        stepOneCopy: '企业负责人或授权管理员通过数字执照完成企业身份确认',
+        stepTwoTitle: '配置组织与权限',
+        stepTwoCopy: '按照部门、角色和管理范围配置组织成员与凭证字段',
+        stepThreeTitle: '向成员颁发 Q-Pass',
+        stepThreeCopy: '成员在 App 中完成绑定并安全持有自己的数字身份凭证',
+        stepFourTitle: '扫码亮证与验签',
+        stepFourCopy: '第三方平台发起验证请求，成员确认后即可返回可信结果',
+        securityTitle: '从凭证生成到验证，安全机制贯穿全流程',
+        securityCopy: 'Q-Pass 通过设备级密钥保护、最小化信息披露和可撤销机制，降低身份数据泄露与滥用风险',
+        securityOneTitle: '私钥留在设备中',
+        securityOneCopy: '密钥在设备安全环境中生成与使用，服务端不接触用户私钥',
+        securityTwoTitle: '离线即可完成验签',
+        securityTwoCopy: '第三方可在本地验证凭证签名，减少对中心化在线服务的依赖',
+        securityThreeTitle: '状态可更新与吊销',
+        securityThreeCopy: '企业可根据成员状态和权限变化更新凭证，避免过期身份继续使用',
+        openTitle: '把可信数字身份接入你的业务',
+        openCopy: '创建应用、配置验证字段、生成测试二维码，并通过 Sandbox 完成回调联调',
+        openIntroTitle: '为第三方平台提供简单、清晰的验证接入',
+        openIntroCopy: '支持托管验证与自托管 OpenID4VP 两种模式，开发者无需理解凭证底层结构，也能快速完成接入',
+        openItemOneTitle: '创建应用',
+        openItemOneCopy: '配置场景与回调地址',
+        openItemTwoTitle: '选择字段',
+        openItemTwoCopy: '仅请求业务所需信息',
+        openItemThreeTitle: 'Sandbox 测试',
+        openItemThreeCopy: '生成二维码并模拟亮证',
+        openItemFourTitle: '回调重放',
+        openItemFourCopy: '快速定位与修复问题',
+        openCta: '进入开放平台',
+        footerSupport: '帮助与支持',
+        footerHelp: '帮助中心',
+        footerContact: '联系我们',
+        footerLegal: '法律与合规',
+        footerService: '服务协议',
+        footerPrivacy: '政策隐私',
+        footerSecurity: '安全与合规',
+      },
+      en: {
+        title: 'Q-PASS Responsive Home V1',
+        navProduct: 'Product',
+        navCredential: 'Credential',
+        navProcess: 'Workflow',
+        navSecurity: 'Security',
+        navPlatform: 'Open Platform',
+        adminLogin: 'Admin Login',
+        applyAdmin: 'Apply for Super Admin',
+        heroTitle: 'Issue once, present anytime, pass with trust',
+        heroCopy: 'Q-Pass enables enterprises to issue verifiable digital identity credentials to organization members. Members hold them securely in the app, while third-party platforms can scan to verify identity and authorization.',
+        iosDownload: 'iOS Download',
+        androidDownload: 'Android Download',
+        qrLabel: 'Scan to download',
+        statOne: 'Enterprise data foundation',
+        statTwo: 'Local offline verification latency',
+        statThree: 'User behavior data uploads',
+        productTitle: 'One credential connects enterprises, members, and third-party platforms',
+        productCopy: 'Q-Pass clearly separates issuer, holder, and verifier, making identity verification trustworthy without sacrificing personal data control.',
+        adminRole: 'Enterprise Admin',
+        adminSummary: 'Issue and manage credentials for organization members after enterprise authorization.',
+        adminPointOne: 'Batch issue credentials',
+        adminPointTwo: 'Update member permissions',
+        adminPointThree: 'Revoke credentials anytime',
+        memberRole: 'Enterprise Member',
+        memberSummary: 'Hold and present credentials on demand, sharing only necessary fields.',
+        memberPointOne: 'Stored securely on device',
+        memberPointTwo: 'Confirm before presenting',
+        memberPointThree: 'No repeated document submission',
+        platformRole: 'Third-party Platform',
+        platformSummary: 'Scan to verify enterprise affiliation, identity, and authorization scope.',
+        platformPointOne: 'Configure verification fields',
+        platformPointTwo: 'Verify locally by scan',
+        platformPointThree: 'Return trusted results',
+        credentialTitle: 'Digital identity is not just shown. It can be verified.',
+        credentialCopy: 'Every Q-Pass includes a verifiable signature, enterprise information, holder information, and validity status. Third parties only receive fields needed for the current business request.',
+        featureOneTitle: 'Issued by enterprise, clear source',
+        featureOneCopy: 'Credentials are issued by authorized enterprise admins, making the identity source traceable.',
+        featureTwoTitle: 'Present only what is needed',
+        featureTwoCopy: 'Users can review each request and authorize only necessary fields.',
+        featureThreeTitle: 'Real-time status, revocable anytime',
+        featureThreeCopy: 'When employment, permissions, or device risk changes, credential status can be updated immediately.',
+        processTitle: 'From enterprise authorization to third-party verification in four steps',
+        processCopy: 'Enterprises issue credentials, members hold them independently, and third parties verify as needed to form a trusted loop.',
+        stepOneTitle: 'Super Admin Registration',
+        stepOneCopy: 'Enterprise owners or authorized admins confirm enterprise identity through a digital license.',
+        stepTwoTitle: 'Configure Organization and Permissions',
+        stepTwoCopy: 'Set up members and credential fields by department, role, and management scope.',
+        stepThreeTitle: 'Issue Q-Pass to Members',
+        stepThreeCopy: 'Members bind in the app and securely hold their digital identity credentials.',
+        stepFourTitle: 'Scan, Present, and Verify',
+        stepFourCopy: 'Third-party platforms initiate requests, and members confirm before trusted results are returned.',
+        securityTitle: 'Security runs through credential creation and verification',
+        securityCopy: 'Q-Pass reduces identity data leakage and abuse through device-level key protection, minimal disclosure, and revocation.',
+        securityOneTitle: 'Private keys stay on device',
+        securityOneCopy: 'Keys are generated and used in the device security environment. The server never touches user private keys.',
+        securityTwoTitle: 'Offline verification supported',
+        securityTwoCopy: 'Third parties can verify credential signatures locally, reducing reliance on centralized online services.',
+        securityThreeTitle: 'Status can be updated and revoked',
+        securityThreeCopy: 'Enterprises can update credential status as member status and permissions change.',
+        openTitle: 'Connect trusted digital identity to your business',
+        openCopy: 'Create apps, configure verification fields, generate test QR codes, and complete callback integration in Sandbox.',
+        openIntroTitle: 'Simple and clear verification integration for third-party platforms',
+        openIntroCopy: 'Supports hosted verification and self-hosted OpenID4VP. Developers can integrate quickly without understanding the underlying credential structure.',
+        openItemOneTitle: 'Create App',
+        openItemOneCopy: 'Configure scenario and callback URL',
+        openItemTwoTitle: 'Select Fields',
+        openItemTwoCopy: 'Request only business-required information',
+        openItemThreeTitle: 'Sandbox Test',
+        openItemThreeCopy: 'Generate QR codes and simulate presentation',
+        openItemFourTitle: 'Callback Replay',
+        openItemFourCopy: 'Locate and fix issues quickly',
+        openCta: 'Enter Open Platform',
+        footerSupport: 'Help and Support',
+        footerHelp: 'Help Center',
+        footerContact: 'Contact Us',
+        footerLegal: 'Legal and Compliance',
+        footerService: 'Terms of Service',
+        footerPrivacy: 'Privacy Policy',
+        footerSecurity: 'Security and Compliance',
+      },
+    };
+
+    const textBindings = [
+      ['navProduct', '[data-scroll-target="product"]'],
+      ['navCredential', '[data-scroll-target="credential"]'],
+      ['navProcess', '[data-scroll-target="process"]'],
+      ['navSecurity', '[data-scroll-target="security"]'],
+      ['navPlatform', '[data-scroll-target="platform"]'],
+      ['adminLogin', '[data-nav-action="admin-login"]'],
+      ['applyAdmin', '[data-nav-action="apply-admin"]'],
+      ['heroTitle', '.hero h1'],
+      ['heroCopy', '.hero-copy'],
+      ['iosDownload', '.download-item:nth-child(1) .download-label'],
+      ['androidDownload', '.download-item:nth-child(2) .download-label'],
+      ['qrLabel', '.download-item:nth-child(1) .download-qr-label'],
+      ['qrLabel', '.download-item:nth-child(2) .download-qr-label'],
+      ['statOne', '.stat:nth-child(1) span'],
+      ['statTwo', '.stat:nth-child(2) span'],
+      ['statThree', '.stat:nth-child(3) span'],
+      ['productTitle', '.product-section h2'],
+      ['productCopy', '.product-section .center-head .body-copy'],
+      ['adminRole', '.role-card:nth-child(1) h3'],
+      ['adminSummary', '.role-card:nth-child(1) .role-summary'],
+      ['adminPointOne', '.role-card:nth-child(1) .role-points span:nth-child(1)'],
+      ['adminPointTwo', '.role-card:nth-child(1) .role-points span:nth-child(2)'],
+      ['adminPointThree', '.role-card:nth-child(1) .role-points span:nth-child(3)'],
+      ['memberRole', '.role-card:nth-child(2) h3'],
+      ['memberSummary', '.role-card:nth-child(2) .role-summary'],
+      ['memberPointOne', '.role-card:nth-child(2) .role-points span:nth-child(1)'],
+      ['memberPointTwo', '.role-card:nth-child(2) .role-points span:nth-child(2)'],
+      ['memberPointThree', '.role-card:nth-child(2) .role-points span:nth-child(3)'],
+      ['platformRole', '.role-card:nth-child(3) h3'],
+      ['platformSummary', '.role-card:nth-child(3) .role-summary'],
+      ['platformPointOne', '.role-card:nth-child(3) .role-points span:nth-child(1)'],
+      ['platformPointTwo', '.role-card:nth-child(3) .role-points span:nth-child(2)'],
+      ['platformPointThree', '.role-card:nth-child(3) .role-points span:nth-child(3)'],
+      ['credentialTitle', '.credential-section h2'],
+      ['credentialCopy', '.credential-section .center-head .body-copy'],
+      ['featureOneTitle', '.feature-card:nth-child(1) h3'],
+      ['featureOneCopy', '.feature-card:nth-child(1) p'],
+      ['featureTwoTitle', '.feature-card:nth-child(2) h3'],
+      ['featureTwoCopy', '.feature-card:nth-child(2) p'],
+      ['featureThreeTitle', '.feature-card:nth-child(3) h3'],
+      ['featureThreeCopy', '.feature-card:nth-child(3) p'],
+      ['processTitle', '.process .center-head h2'],
+      ['processCopy', '.process .center-head .body-copy'],
+      ['stepOneTitle', '.step:nth-child(1) h3'],
+      ['stepOneCopy', '.step:nth-child(1) p'],
+      ['stepTwoTitle', '.step:nth-child(2) h3'],
+      ['stepTwoCopy', '.step:nth-child(2) p'],
+      ['stepThreeTitle', '.step:nth-child(3) h3'],
+      ['stepThreeCopy', '.step:nth-child(3) p'],
+      ['stepFourTitle', '.step:nth-child(4) h3'],
+      ['stepFourCopy', '.step:nth-child(4) p'],
+      ['securityTitle', '.security-copy h2'],
+      ['securityCopy', '.security-copy .body-copy'],
+      ['securityOneTitle', '.security-card:nth-child(1) h3'],
+      ['securityOneCopy', '.security-card:nth-child(1) p'],
+      ['securityTwoTitle', '.security-card:nth-child(2) h3'],
+      ['securityTwoCopy', '.security-card:nth-child(2) p'],
+      ['securityThreeTitle', '.security-card:nth-child(3) h3'],
+      ['securityThreeCopy', '.security-card:nth-child(3) p'],
+      ['openTitle', '.platform-headline h2'],
+      ['openCopy', '.platform-headline .body-copy'],
+      ['openIntroTitle', '.platform-intro h3'],
+      ['openIntroCopy', '.platform-intro .body-copy'],
+      ['openItemOneTitle', '.platform-item:nth-child(1) h3'],
+      ['openItemOneCopy', '.platform-item:nth-child(1) p'],
+      ['openItemTwoTitle', '.platform-item:nth-child(2) h3'],
+      ['openItemTwoCopy', '.platform-item:nth-child(2) p'],
+      ['openItemThreeTitle', '.platform-item:nth-child(3) h3'],
+      ['openItemThreeCopy', '.platform-item:nth-child(3) p'],
+      ['openItemFourTitle', '.platform-item:nth-child(4) h3'],
+      ['openItemFourCopy', '.platform-item:nth-child(4) p'],
+      ['openCta', '.platform-cta .cta-label'],
+      ['footerSupport', '.footer-col.support h3'],
+      ['footerHelp', '.footer-col.support p:nth-of-type(1)'],
+      ['footerContact', '.footer-col.support p:nth-of-type(2)'],
+      ['footerLegal', '.footer-col.legal h3'],
+      ['footerService', '.footer-col.legal p:nth-of-type(1)'],
+      ['footerPrivacy', '.footer-col.legal p:nth-of-type(2)'],
+      ['footerSecurity', '.footer-col.legal p:nth-of-type(3)'],
+    ];
+
+    let activeLanguage = null;
+
+    const setLanguage = (lang) => {
+      const nextLang = translations[lang] ? lang : 'zh';
+      if (activeLanguage === nextLang) return;
+
+      const dictionary = translations[nextLang];
+      document.documentElement.lang = nextLang === 'en' ? 'en' : 'zh-CN';
+      document.title = dictionary.title;
+      textBindings.forEach(([key, selector]) => {
+        const node = document.querySelector(selector);
+        if (node && dictionary[key] && node.textContent !== dictionary[key]) {
+          node.textContent = dictionary[key];
+        }
+      });
+      document.querySelectorAll('[data-lang-option]').forEach((option) => {
+        option.classList.toggle('is-active', option.dataset.langOption === nextLang);
+      });
+      localStorage.setItem('qpass-lang', nextLang);
+      activeLanguage = nextLang;
+    };
+
+    document.querySelectorAll('[data-lang-option]').forEach((option) => {
+      option.addEventListener('click', () => setLanguage(option.dataset.langOption));
+    });
+
+    document.querySelectorAll('.download-btn').forEach((button) => {
+      button.addEventListener('mouseenter', () => button.classList.add('is-open'));
+      button.addEventListener('mouseleave', () => button.classList.remove('is-open'));
+      button.addEventListener('click', () => button.classList.add('is-open'));
+      button.addEventListener('blur', () => button.classList.remove('is-open'));
+    });
+
+    const setActiveTarget = (targetId) => {
+      navItems.forEach((item) => {
+        item.classList.toggle('is-active', item.dataset.scrollTarget === targetId);
+      });
+    };
+
+    const updateActiveNav = () => {
+      if (!sectionAnchors.length) return;
+      const firstTop = sectionAnchors[0].section.offsetTop - nav.offsetHeight - 40;
+      if (window.scrollY < firstTop) {
+        setActiveTarget('');
+        return;
+      }
+
+      const checkLine = nav.offsetHeight + 72;
+      let current = sectionAnchors[0].id;
+      sectionAnchors.forEach((entry) => {
+        if (entry.section.getBoundingClientRect().top <= checkLine) {
+          current = entry.id;
+        }
+      });
+      setActiveTarget(current);
+    };
+
+    const setNavState = () => {
+      const progress = Math.min(window.scrollY / 180, 1);
+      document.documentElement.style.setProperty('--nav-border-alpha', String(0.18 + progress * 0.22));
+      nav.classList.toggle('is-scrolled', window.scrollY > 8);
+      updateActiveNav();
+    };
+
+    navItems.forEach((item) => {
+      item.addEventListener('click', () => {
+        const target = document.getElementById(item.dataset.scrollTarget);
+        if (!target) return;
+        setActiveTarget(item.dataset.scrollTarget);
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    document.querySelector('.logo')?.addEventListener('click', () => {
+      setActiveTarget('');
+      document.getElementById('home')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    window.addEventListener('scroll', setNavState, { passive: true });
+    setLanguage(localStorage.getItem('qpass-lang') || 'zh');
+    document.documentElement.dataset.langReady = 'true';
+    setNavState();
+  </script>
+</body>
+</html>
