@@ -97,6 +97,7 @@
     h3,
     p,
     span,
+    strong,
     a,
     .body-copy {
       overflow-wrap: break-word;
@@ -566,7 +567,6 @@
 
     .step {
       grid-column: span 6;
-      min-height: 244px;
       padding: 28px;
       border: 1px solid #f2f2f6;
       border-radius: 24px;
@@ -735,8 +735,9 @@
       min-width: 0;
       font-size: inherit;
       line-height: 1.2;
-      overflow-wrap: normal;
-      white-space: nowrap;
+      overflow-wrap: break-word;
+      text-align: center;
+      white-space: normal;
     }
 
     .platform-cta span:last-child {
@@ -770,7 +771,7 @@
 
     html[lang="en"] .step p {
       hyphens: none;
-      overflow-wrap: normal;
+      overflow-wrap: break-word;
       word-break: normal;
     }
 
@@ -785,6 +786,10 @@
       gap: 24px;
     }
 
+    html[lang="en"] .download-btn {
+      width: 210px;
+    }
+
     html[lang="en"] .stat {
       flex: 1 1 0;
       min-width: 0;
@@ -792,6 +797,10 @@
 
     html[lang="en"] .stat + .stat {
       padding-left: 24px;
+    }
+
+    html[lang="en"] .stat + .stat::before {
+      height: 78px;
     }
 
     html[lang="en"] .stat span {
@@ -832,6 +841,15 @@
 
     html[lang="en"] .footer-col h3 {
       white-space: nowrap;
+      overflow-wrap: normal;
+    }
+
+    html[lang="en"] .footer-col.support {
+      grid-column: 15 / span 5;
+    }
+
+    html[lang="en"] .footer-col.legal {
+      grid-column: 20 / span 5;
     }
 
     .footer {
@@ -1833,6 +1851,7 @@
     ];
 
     let activeLanguage = null;
+    const cleanCopy = (value) => (typeof value === 'string' ? value.trim() : value);
 
     const setLanguage = (lang) => {
       const nextLang = translations[lang] ? lang : 'zh';
@@ -1840,11 +1859,12 @@
 
       const dictionary = translations[nextLang];
       document.documentElement.lang = nextLang === 'en' ? 'en' : 'zh-CN';
-      document.title = dictionary.title;
+      document.title = cleanCopy(dictionary.title);
       textBindings.forEach(([key, selector]) => {
         const node = document.querySelector(selector);
-        if (node && dictionary[key] && node.textContent !== dictionary[key]) {
-          node.textContent = dictionary[key];
+        const value = cleanCopy(dictionary[key]);
+        if (node && value && node.textContent !== value) {
+          node.textContent = value;
         }
       });
       document.querySelectorAll('[data-lang-option]').forEach((option) => {

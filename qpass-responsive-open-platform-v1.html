@@ -111,6 +111,7 @@
     h3,
     p,
     span,
+    strong,
     a,
     button,
     input,
@@ -299,6 +300,10 @@
       border: 1px solid var(--black);
       font-size: 16px;
       font-weight: 820;
+      max-width: 100%;
+      min-width: 0;
+      text-align: center;
+      white-space: normal;
     }
 
     .primary-cta {
@@ -852,6 +857,11 @@
       min-width: 0;
     }
 
+    .access-action .primary-cta,
+    .access-cta-label {
+      white-space: nowrap;
+    }
+
     html[lang="en"] h1,
     html[lang="en"] .nowrap,
     html[lang="en"] .workspace-head .body-copy,
@@ -891,6 +901,10 @@
       grid-column: 19 / span 5;
     }
 
+    html[lang="en"] .access-copy .body-copy {
+      white-space: nowrap;
+    }
+
     html[lang="en"] .access-action .primary-cta {
       padding-left: 24px;
       padding-right: 24px;
@@ -898,6 +912,15 @@
 
     html[lang="en"] .footer-col h3 {
       white-space: nowrap;
+      overflow-wrap: normal;
+    }
+
+    html[lang="en"] .footer-col.support {
+      grid-column: 15 / span 5;
+    }
+
+    html[lang="en"] .footer-col.legal {
+      grid-column: 20 / span 5;
     }
 
     .footer {
@@ -1749,17 +1772,19 @@
       }
     };
 
+    const cleanCopy = (value) => (typeof value === 'string' ? value.trim() : value);
+
     const setText = (selector, value) => {
       const element = document.querySelector(selector);
       if (element) {
-        element.textContent = value;
+        element.textContent = cleanCopy(value);
       }
     };
 
     const setAttr = (selector, attr, value) => {
       const element = document.querySelector(selector);
       if (element) {
-        element.setAttribute(attr, value);
+        element.setAttribute(attr, cleanCopy(value));
       }
     };
 
