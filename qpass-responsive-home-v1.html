@@ -255,22 +255,15 @@
     .hero-actions {
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 14px;
       margin-top: 40px;
-    }
-
-    .download-buttons {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 20px;
     }
 
     .download-btn {
       position: relative;
-      width: 146px;
+      width: 168px;
       height: 50px;
-      gap: 10px;
+      gap: 0;
       padding: 0 18px;
       border: 1px solid var(--black);
       background: var(--black);
@@ -279,47 +272,82 @@
       font-weight: 600;
     }
 
-    .download-btn img {
-      width: 18px;
-      height: 18px;
-      object-fit: contain;
-      filter: brightness(0) invert(1);
-    }
-
     .download-item {
       position: relative;
       display: inline-flex;
     }
 
-    .download-qr-panel {
+    .download-popover {
       box-sizing: border-box;
-      width: 124px;
-      height: 140px;
-      padding: 12px;
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 50%;
+      z-index: 6;
+      width: 100%;
+      height: 168px;
+      padding: 20px;
       border: 1px solid rgb(228 229 235 / 60%);
       border-radius: 16px;
       background: #fff;
-      flex: 0 0 auto;
       display: inline-flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      gap: 8px;
+      gap: 12px;
+      overflow: visible;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translate(-50%, 8px);
+      transition:
+        border-color 220ms cubic-bezier(0.25, 1, 0.5, 1),
+        background 220ms cubic-bezier(0.25, 1, 0.5, 1),
+        box-shadow 220ms cubic-bezier(0.25, 1, 0.5, 1),
+        opacity 160ms ease,
+        visibility 160ms ease,
+        transform 220ms cubic-bezier(0.25, 1, 0.5, 1);
     }
 
     .qr-code {
-      width: 96px;
-      height: 96px;
+      width: 108px;
+      height: 108px;
       display: block;
       margin: 0 auto;
       object-fit: contain;
+      transition: transform 220ms cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .download-btn:hover + .download-popover,
+    .download-btn:focus-visible + .download-popover,
+    .download-btn.is-open + .download-popover {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0);
+    }
+
+    .download-btn:hover + .download-popover,
+    .download-btn:focus-visible + .download-popover,
+    .download-btn.is-open + .download-popover {
+      border-color: rgb(228 229 235 / 20%);
+      box-shadow: 0 14px 30px rgb(23 23 25 / 10%);
+    }
+
+    .download-btn:hover + .download-popover .qr-code,
+    .download-btn:focus-visible + .download-popover .qr-code,
+    .download-btn.is-open + .download-popover .qr-code {
+      transform: scale(1.035);
     }
 
     .download-qr-label {
       color: var(--ink);
       font-size: 12px;
       line-height: 1.2;
-      white-space: nowrap;
+      white-space: normal;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow-wrap: break-word;
     }
 
     .hero-stats {
@@ -1278,24 +1306,24 @@
       .hero-actions {
         align-items: flex-start;
         flex-wrap: wrap;
-        gap: 18px;
-      }
-
-      .download-buttons {
-        gap: 20px;
+        gap: 14px;
       }
 
       .download-btn {
-        width: 146px;
+        width: 168px;
+      }
+
+      html[lang="en"] .download-btn {
+        width: 210px;
       }
 
       .download-item {
         width: auto;
       }
 
-      .download-qr-panel {
-        width: 124px;
-        height: 140px;
+      .download-popover {
+        width: 100%;
+        height: 168px;
       }
 
       .hero-stats {
@@ -1372,17 +1400,12 @@
           <h1>一次颁发，随时出示，可信通行</h1>
           <p class="body-copy hero-copy">Q-Pass 让企业为组织成员颁发可验证的数字身份凭证，成员在 App 中安全持有，第三方平台扫码即可完成身份与授权核验</p>
           <div class="hero-actions">
-            <span class="download-buttons">
-              <span class="download-item">
-                <span class="download-btn" tabindex="0"><img src="ios.svg" alt=""><span class="download-label">iOS下载</span></span>
+            <span class="download-item">
+              <span class="download-btn" tabindex="0"><span class="download-label">下载APP客户端</span></span>
+              <span class="download-popover" aria-hidden="true">
+                <img class="qr-code" src="二维码.png" alt="App客户端下载二维码">
+                <span class="download-qr-label">仅支持ios和安卓端下载</span>
               </span>
-              <span class="download-item">
-                <span class="download-btn" tabindex="0"><img src="安卓.svg" alt=""><span class="download-label">安卓下载</span></span>
-              </span>
-            </span>
-            <span class="download-qr-panel" aria-hidden="false">
-              <img class="qr-code" src="二维码.png" alt="下载二维码">
-              <span class="download-qr-label">扫码下载移动端</span>
             </span>
           </div>
           <div class="hero-stats">
@@ -1616,9 +1639,8 @@
         applyAdmin: '申请成为超管',
         heroTitle: '一次颁发，随时出示，可信通行',
         heroCopy: 'Q-Pass 让企业为组织成员颁发可验证的数字身份凭证，成员在 App 中安全持有，第三方平台扫码即可完成身份与授权核验',
-        iosDownload: 'iOS下载',
-        androidDownload: '安卓下载',
-        qrLabel: '扫码下载移动端',
+        appDownload: '下载APP客户端',
+        qrLabel: '仅支持ios和安卓端下载',
         statOne: '企业主体数据基础',
         statTwo: '本地离线验签延迟',
         statThree: '用户行为数据上传',
@@ -1697,9 +1719,8 @@
         applyAdmin: 'Apply for Super Admin',
         heroTitle: 'Issue once, present anytime, pass with trust',
         heroCopy: 'Q-Pass enables enterprises to issue verifiable digital identity credentials to organization members. Members hold them securely in the app, while third-party platforms can scan to verify identity and authorization.',
-        iosDownload: 'iOS Download',
-        androidDownload: 'Android Download',
-        qrLabel: 'Scan for app',
+        appDownload: 'Download App Client',
+        qrLabel: 'iOS and Android only',
         statOne: 'Enterprise data foundation',
         statTwo: 'Local offline verification latency',
         statThree: 'User behavior data uploads',
@@ -1779,8 +1800,7 @@
       ['applyAdmin', '[data-nav-action="apply-admin"]'],
       ['heroTitle', '.hero h1'],
       ['heroCopy', '.hero-copy'],
-      ['iosDownload', '.download-item:nth-child(1) .download-label'],
-      ['androidDownload', '.download-item:nth-child(2) .download-label'],
+      ['appDownload', '.download-label'],
       ['qrLabel', '.download-qr-label'],
       ['statOne', '.stat:nth-child(1) span'],
       ['statTwo', '.stat:nth-child(2) span'],
@@ -1860,10 +1880,15 @@
       const dictionary = translations[nextLang];
       document.documentElement.lang = nextLang === 'en' ? 'en' : 'zh-CN';
       document.title = cleanCopy(dictionary.title);
-      textBindings.forEach(([key, selector]) => {
+      textBindings.forEach(([key, selector, attr]) => {
         const node = document.querySelector(selector);
         const value = cleanCopy(dictionary[key]);
-        if (node && value && node.textContent !== value) {
+        if (!node || !value) return;
+        if (attr) {
+          if (node.getAttribute(attr) !== value) {
+            node.setAttribute(attr, value);
+          }
+        } else if (node.textContent !== value) {
           node.textContent = value;
         }
       });
@@ -1876,6 +1901,22 @@
 
     document.querySelectorAll('[data-lang-option]').forEach((option) => {
       option.addEventListener('click', () => setLanguage(option.dataset.langOption));
+    });
+
+    document.querySelectorAll('.download-btn').forEach((button) => {
+      const popover = button.nextElementSibling;
+      const setOpen = (isOpen) => {
+        button.classList.toggle('is-open', isOpen);
+        if (popover) {
+          popover.setAttribute('aria-hidden', String(!isOpen));
+        }
+      };
+
+      button.addEventListener('mouseenter', () => setOpen(true));
+      button.addEventListener('mouseleave', () => setOpen(false));
+      button.addEventListener('focus', () => setOpen(true));
+      button.addEventListener('blur', () => setOpen(false));
+      button.addEventListener('click', () => setOpen(true));
     });
 
     const setActiveTarget = (targetId) => {
